@@ -48,9 +48,11 @@ export default function PricingPage() {
   const [loading, setLoading] = useState<string | null>(null)
   const router = useRouter()
 
-  async function handleCheckout(priceId: string | null, planName: string) {
+  async function handleCheckout(priceId: string | null | undefined, planName: string) {
+    console.log('[handleCheckout] called', { priceId, planName })
+
     if (!priceId) {
-      router.push('/auth')
+      console.error('[handleCheckout] missing priceId — check NEXT_PUBLIC_STRIPE_* env vars in Vercel')
       return
     }
 
@@ -126,7 +128,7 @@ export default function PricingPage() {
               </ul>
 
               <button
-                onClick={() => plan.priceId && handleCheckout(plan.priceId, plan.name)}
+                onClick={() => handleCheckout(plan.priceId, plan.name)}
                 disabled={loading === plan.name}
                 className={`w-full py-3 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 ${plan.highlight
                     ? 'bg-blue-600 text-white hover:bg-blue-700'

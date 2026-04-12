@@ -1,0 +1,52 @@
+'use client'
+
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Home, BookOpen, Layers, Brain, Lock } from 'lucide-react'
+
+const tabs = [
+  { label: 'Today',      href: '/dashboard',            icon: Home,     pro: false },
+  { label: 'Glossary',   href: '/dashboard/glossary',   icon: BookOpen, pro: true  },
+  { label: 'Flashcards', href: '/dashboard/flashcards', icon: Layers,   pro: true  },
+  { label: 'Quiz',       href: '/dashboard/quiz',       icon: Brain,    pro: true  },
+]
+
+export default function BottomNav({ isPro }: { isPro: boolean }) {
+  const pathname = usePathname()
+
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-100 md:hidden safe-area-bottom">
+      <div className="grid grid-cols-4">
+        {tabs.map(({ label, href, icon: Icon, pro }) => {
+          const isActive = pathname === href
+          const locked = pro && !isPro
+
+          return (
+            <Link
+              key={href}
+              href={locked ? '/pricing' : href}
+              className={`flex flex-col items-center justify-center py-2.5 gap-1 relative transition-colors active:bg-gray-50 ${
+                isActive ? 'text-blue-600' : locked ? 'text-gray-300' : 'text-gray-500'
+              }`}
+            >
+              {isActive && (
+                <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-blue-600 rounded-full" />
+              )}
+              <div className="relative">
+                <Icon size={22} strokeWidth={isActive ? 2.5 : 1.8} />
+                {locked && (
+                  <Lock
+                    size={10}
+                    strokeWidth={2.5}
+                    className="absolute -top-1 -right-1.5 text-gray-400"
+                  />
+                )}
+              </div>
+              <span className="text-xs font-medium">{label}</span>
+            </Link>
+          )
+        })}
+      </div>
+    </nav>
+  )
+}

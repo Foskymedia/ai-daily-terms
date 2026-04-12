@@ -2,6 +2,8 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Profile } from '@/types'
+import BottomNav from '@/components/BottomNav'
+import AddToHomeScreen from '@/components/AddToHomeScreen'
 
 async function signOut() {
   'use server'
@@ -27,7 +29,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b border-gray-100">
+
+      {/* Desktop nav — hidden on mobile */}
+      <nav className="hidden md:block bg-white border-b border-gray-100">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/dashboard" className="text-xl font-bold text-gray-900">AI Daily Terms</Link>
           <div className="flex items-center gap-1">
@@ -68,9 +72,35 @@ export default async function DashboardLayout({ children }: { children: React.Re
           </div>
         </div>
       </nav>
-      <main className="max-w-5xl mx-auto px-4 py-10">
+
+      {/* Mobile header — shown on mobile only */}
+      <nav className="md:hidden bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
+        <Link href="/dashboard" className="text-lg font-bold text-gray-900">AI Daily Terms</Link>
+        <div className="flex items-center gap-3">
+          {isPro && (
+            <span className="text-xs bg-blue-100 text-blue-700 font-semibold px-2 py-1 rounded-full">PRO</span>
+          )}
+          {!isPro && (
+            <Link href="/pricing" className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg font-semibold">
+              Upgrade
+            </Link>
+          )}
+          <form action={signOut}>
+            <button type="submit" className="text-sm text-gray-500">Sign out</button>
+          </form>
+        </div>
+      </nav>
+
+      {/* Main content — extra bottom padding on mobile for bottom nav */}
+      <main className="max-w-5xl mx-auto px-4 py-8 md:py-10 pb-24 md:pb-10">
         {children}
       </main>
+
+      {/* Bottom tab bar (mobile only) */}
+      <BottomNav isPro={isPro} />
+
+      {/* Add to Home Screen banner */}
+      <AddToHomeScreen />
     </div>
   )
 }

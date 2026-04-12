@@ -251,7 +251,7 @@ export default function QuizPage() {
               opt.key === answerState?.selected && !answerState?.isCorrect
 
             let cls =
-              'w-full text-left px-5 py-4 rounded-xl border-2 font-medium text-sm transition-all '
+              'w-full text-left px-5 py-4 rounded-xl border-2 font-medium text-sm transition-all min-h-[52px] '
 
             if (!answered) {
               cls += 'border-gray-200 text-gray-700 hover:border-blue-400 hover:bg-blue-50 cursor-pointer'

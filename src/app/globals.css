@@ -18,6 +18,25 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  /* Prevent iOS text size adjustment */
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Prevent iOS zoom on inputs — font-size must be >= 16px */
+input,
+textarea,
+select {
+  font-size: 16px !important;
+}
+
+/* Safe area inset support for notched devices */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Smooth scrolling globally */
+html {
+  scroll-behavior: smooth;
 }
 
 @layer utilities {

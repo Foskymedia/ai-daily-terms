@@ -77,15 +77,15 @@ export default async function DashboardPage() {
   return (
     <div className="max-w-2xl mx-auto">
       {/* Welcome banner */}
-      <div className="mb-8">
-        <p className="text-sm text-gray-400 uppercase tracking-wide font-medium">{today}</p>
-        <h1 className="text-3xl font-bold text-gray-900 mt-1">
+      <div className="mb-6">
+        <p className="text-xs text-gray-400 uppercase tracking-wide font-medium">{today}</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mt-1">
           {isPro ? 'Your AI term for today' : "Today's free term"}
         </h1>
       </div>
 
       {todaysTerm ? (
-        <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+        <div className="bg-white rounded-2xl border border-gray-100 p-5 md:p-8 shadow-sm">
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-2 flex-wrap">
               {todaysTerm.category && (
@@ -101,13 +101,13 @@ export default async function DashboardPage() {
             </div>
           </div>
 
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">{todaysTerm.term}</h2>
-          <p className="text-gray-600 leading-relaxed text-lg mb-6">{todaysTerm.definition}</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">{todaysTerm.term}</h2>
+          <p className="text-gray-600 leading-relaxed text-base md:text-lg mb-6">{todaysTerm.definition}</p>
 
           {todaysTerm.example_sentence && (
-            <div className="bg-gray-50 rounded-xl p-5 border-l-4 border-blue-400">
-              <p className="text-sm text-gray-400 font-medium uppercase tracking-wide mb-2">Example</p>
-              <p className="text-gray-700 italic">&ldquo;{todaysTerm.example_sentence}&rdquo;</p>
+            <div className="bg-gray-50 rounded-xl p-4 md:p-5 border-l-4 border-blue-400">
+              <p className="text-xs text-gray-400 font-medium uppercase tracking-wide mb-2">Example</p>
+              <p className="text-gray-700 italic text-sm md:text-base">&ldquo;{todaysTerm.example_sentence}&rdquo;</p>
             </div>
           )}
         </div>

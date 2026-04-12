@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase/server'
+import { Term } from '@/types'
 
 const features = [
   { icon: '📅', title: 'One Term a Day', desc: 'A carefully chosen AI term delivered daily — free forever.' },
@@ -13,7 +15,45 @@ const steps = [
   { step: '3', title: 'Go Pro for more', desc: 'Upgrade to unlock the full glossary, flashcards, quizzes, and history.' },
 ]
 
-export default function HomePage() {
+async function getTodaysTerm(): Promise<Term | null> {
+  try {
+    const supabase = createClient()
+    const today = new Date().toISOString().split('T')[0]
+
+    const { data: term } = await supabase
+      .from('terms')
+      .select('*')
+      .eq('vertical_id', 'general')
+      .eq('published', true)
+      .eq('publish_date', today)
+      .single()
+
+    if (term) return term as Term
+
+    // Fallback to most recent
+    const { data: fallback } = await supabase
+      .from('terms')
+      .select('*')
+      .eq('vertical_id', 'general')
+      .eq('published', true)
+      .order('publish_date', { ascending: false })
+      .limit(1)
+      .single()
+
+    return (fallback as Term) ?? null
+  } catch {
+    return null
+  }
+}
+
+function firstSentence(text: string): string {
+  const match = text.match(/^[^.!?]+[.!?]/)
+  return match ? match[0] : text
+}
+
+export default async function HomePage() {
+  const todaysTerm = await getTodaysTerm()
+
   return (
     <div className="min-h-screen bg-white">
       {/* Nav */}
@@ -51,6 +91,45 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+
+      {/* Today's Term Preview */}
+      {todaysTerm && (
+        <section className="max-w-3xl mx-auto px-4 pb-20">
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-100 p-8">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+              <p className="text-sm font-semibold text-blue-600 uppercase tracking-wide">Today&apos;s Term</p>
+            </div>
+            <div className="flex items-start gap-3 flex-wrap mb-3">
+              <h2 className="text-2xl font-bold text-gray-900">{todaysTerm.term}</h2>
+              <div className="flex gap-2 flex-wrap pt-1">
+                {todaysTerm.category && (
+                  <span className="text-xs bg-white text-blue-600 border border-blue-200 px-2.5 py-1 rounded-full font-medium">
+                    {todaysTerm.category}
+                  </span>
+                )}
+                {todaysTerm.difficulty && (
+                  <span className="text-xs bg-white text-gray-600 border border-gray-200 px-2.5 py-1 rounded-full font-medium capitalize">
+                    {todaysTerm.difficulty}
+                  </span>
+                )}
+              </div>
+            </div>
+            <p className="text-gray-700 text-lg leading-relaxed mb-6">
+              {firstSentence(todaysTerm.definition)}
+            </p>
+            <div className="flex items-center gap-3 flex-wrap">
+              <Link
+                href="/auth"
+                className="bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors text-sm"
+              >
+                Read full definition →
+              </Link>
+              <p className="text-sm text-gray-400">Free account required</p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* How it works */}
       <section className="bg-gray-50 py-20">

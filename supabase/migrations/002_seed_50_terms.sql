@@ -1,0 +1,113 @@
+-- ============================================================
+-- AI Daily Terms — Seed 50 General AI Terms
+-- publish_date starts 2026-04-13, one per day
+-- ============================================================
+
+insert into public.terms (vertical_id, slug, term, definition, example_sentence, category, difficulty, published, publish_date) values
+
+-- FUNDAMENTALS
+('general', 'artificial-intelligence', 'Artificial Intelligence', 'The simulation of human intelligence processes by computer systems, enabling machines to perform tasks like reasoning, learning, and problem-solving. AI is a broad field encompassing everything from simple rule-based systems to advanced neural networks.', 'Artificial intelligence powers everything from email spam filters to self-driving cars.', 'Fundamentals', 'beginner', true, '2026-04-13'),
+
+('general', 'machine-learning', 'Machine Learning', 'A subset of AI where systems learn from data to improve performance on a task without being explicitly programmed. Instead of following hard-coded rules, ML models identify patterns and make decisions based on examples.', 'A machine learning model trained on millions of emails can accurately detect spam without a human writing any detection rules.', 'Fundamentals', 'beginner', true, '2026-04-14'),
+
+('general', 'deep-learning', 'Deep Learning', 'A branch of machine learning using neural networks with many layers (hence "deep") to learn complex patterns directly from raw data. Deep learning powers most modern AI breakthroughs in language, vision, and audio.', 'Deep learning enables smartphones to recognize faces in photos with remarkable accuracy.', 'Fundamentals', 'intermediate', true, '2026-04-15'),
+
+('general', 'neural-network', 'Neural Network', 'A computational model loosely inspired by the human brain, consisting of layers of interconnected nodes that process and transform data. Neural networks learn by adjusting the strength of connections between nodes during training.', 'The image classification neural network learned to identify cats and dogs after training on millions of labeled photos.', 'Fundamentals', 'intermediate', true, '2026-04-16'),
+
+('general', 'algorithm', 'Algorithm', 'A step-by-step set of instructions that a computer follows to solve a problem or complete a task. In AI, algorithms define how models learn from data and make predictions.', 'The recommendation algorithm analyzed viewing history to suggest the next show with uncanny accuracy.', 'Fundamentals', 'beginner', true, '2026-04-17'),
+
+('general', 'training-data', 'Training Data', 'The dataset used to teach a machine learning model by exposing it to examples from which it learns patterns. The quality and diversity of training data directly affects how well the model performs.', 'The speech recognition model was trained on thousands of hours of recorded conversations as training data.', 'Fundamentals', 'beginner', true, '2026-04-18'),
+
+('general', 'foundation-model', 'Foundation Model', 'A large AI model trained on broad data at scale that can be adapted to a wide range of downstream tasks. Foundation models like GPT-4 and Claude serve as a base that developers build specialized applications on top of.', 'Companies use foundation models as a starting point and fine-tune them for industries like healthcare or legal.', 'Fundamentals', 'intermediate', true, '2026-04-19'),
+
+('general', 'parameters', 'Parameters', 'The numerical values inside a neural network that are adjusted during training to help the model learn patterns. A model with more parameters can generally capture more complex relationships in data.', 'GPT-4 reportedly has over a trillion parameters, giving it exceptional language understanding and generation ability.', 'Fundamentals', 'intermediate', true, '2026-04-20'),
+
+('general', 'weights', 'Weights', 'The individual numeric values within a neural network that determine the strength of connections between neurons. Weights are the learned values that encode everything the model knows from training.', 'After training, the model''s weights encoded the grammar rules and world knowledge it absorbed from the data.', 'Fundamentals', 'intermediate', true, '2026-04-21'),
+
+('general', 'overfitting', 'Overfitting', 'When a model learns the training data too well — including its noise and quirks — and performs poorly on new, unseen data. Overfitting means the model has memorized rather than generalized.', 'The overfitting model scored 99% on training examples but only 60% accuracy on real-world test cases.', 'Fundamentals', 'intermediate', true, '2026-04-22'),
+
+-- LLMs
+('general', 'temperature', 'Temperature', 'A parameter that controls the randomness of an AI model''s output. Low temperature makes responses more predictable and focused; high temperature makes them more creative and varied.', 'Setting temperature to 0 makes the model always choose the most likely next word, while a higher value produces more creative writing.', 'LLMs', 'beginner', true, '2026-04-23'),
+
+('general', 'system-prompt', 'System Prompt', 'A set of instructions given to an LLM before the conversation begins that defines its behavior, persona, and constraints. System prompts are invisible to end users but shape everything the model says.', 'The system prompt told the customer service bot to always be polite, never discuss competitors, and respond only in English.', 'LLMs', 'beginner', true, '2026-04-24'),
+
+('general', 'vector-database', 'Vector Database', 'A specialized database designed to store and search high-dimensional vector embeddings efficiently. Vector databases enable fast similarity search, making them essential for RAG systems and semantic search applications.', 'The vector database returned the ten most semantically similar documents in milliseconds, even across millions of stored entries.', 'LLMs', 'intermediate', true, '2026-04-25'),
+
+('general', 'attention-mechanism', 'Attention Mechanism', 'A technique in neural networks that allows a model to focus on the most relevant parts of its input when producing each part of its output. The attention mechanism is the key innovation behind modern transformer models.', 'The attention mechanism allowed the translator to focus on the subject of the sentence when generating the verb in the translated output.', 'LLMs', 'advanced', true, '2026-04-26'),
+
+('general', 'transformer', 'Transformer', 'The neural network architecture that powers most modern LLMs, introduced in the 2017 paper "Attention Is All You Need." Transformers process entire sequences in parallel using attention to relate different parts of the input.', 'The transformer architecture enabled ChatGPT to understand nuanced questions and generate coherent multi-paragraph responses.', 'LLMs', 'intermediate', true, '2026-04-27'),
+
+('general', 'zero-shot-learning', 'Zero-shot Learning', 'The ability of an AI model to perform a task it was never explicitly trained on, using only a description or its general knowledge. Zero-shot learning demonstrates how powerful general-purpose models have become.', 'The model correctly classified customer complaints into new categories using zero-shot learning, without seeing any training examples for those categories.', 'LLMs', 'intermediate', true, '2026-04-28'),
+
+('general', 'few-shot-learning', 'Few-shot Learning', 'A prompting technique where you provide a model with a small number of examples (typically 2–10) before asking it to complete a task. Few-shot learning dramatically improves model performance on structured or format-sensitive tasks.', 'By including three example reviews with their sentiment labels, the few-shot prompt helped the model accurately classify the remaining hundred reviews.', 'LLMs', 'intermediate', true, '2026-04-29'),
+
+('general', 'chain-of-thought', 'Chain of Thought', 'A prompting technique where the model is encouraged to show its reasoning step by step before giving a final answer. Chain of thought significantly improves accuracy on complex problems like math and logic.', 'Adding "Let''s think step by step" to the prompt triggered chain-of-thought reasoning and helped the model solve the multi-step problem correctly.', 'LLMs', 'intermediate', true, '2026-04-30'),
+
+('general', 'reasoning-model', 'Reasoning Model', 'An AI model specifically designed or trained to think through problems using extended internal reasoning before producing an answer. Reasoning models excel at complex tasks like coding, math, and logical puzzles.', 'The reasoning model spent several seconds working through the legal contract before flagging the problematic clause that simpler models had missed.', 'LLMs', 'intermediate', true, '2026-05-01'),
+
+('general', 'tokenization', 'Tokenization', 'The process of breaking text into smaller units called tokens before feeding it to a language model. Tokens can be words, parts of words, or individual characters depending on the method used.', 'The word "unhappiness" was split into three tokens during tokenization — "un", "happy", and "ness" — each processed separately by the model.', 'LLMs', 'beginner', true, '2026-05-02'),
+
+-- AGENTS
+('general', 'agentic-workflow', 'Agentic Workflow', 'A pattern where an AI model autonomously breaks a complex task into steps, executes them sequentially (often using tools), and iterates based on results. Agentic workflows enable AI to complete multi-step tasks with minimal human intervention.', 'The agentic workflow searched the web, read ten articles, wrote a draft, and revised it twice before delivering the finished report.', 'Agents', 'intermediate', true, '2026-05-03'),
+
+('general', 'tool-use', 'Tool Use', 'The ability of an AI model to invoke external tools — like web search, code execution, or API calls — to gather information or take actions beyond generating text. Tool use transforms a chatbot into a true AI agent.', 'The model used tool use to call a weather API mid-conversation and give the user an accurate forecast for their trip.', 'Agents', 'intermediate', true, '2026-05-04'),
+
+('general', 'multi-agent-system', 'Multi-agent System', 'An architecture where multiple AI agents collaborate, each with specialized roles, to complete tasks more effectively than a single agent could. One agent might research, another might write, and a third might fact-check.', 'The multi-agent system coordinated a planner, a coder, and a reviewer agent to build and test a complete software feature autonomously.', 'Agents', 'advanced', true, '2026-05-05'),
+
+('general', 'model-context-protocol', 'Model Context Protocol (MCP)', 'An open standard that defines how AI models connect to external tools, data sources, and services in a consistent way. MCP allows developers to build integrations once and have them work across any compatible AI model.', 'By implementing the Model Context Protocol, the company''s internal database became instantly accessible to any MCP-compatible AI assistant.', 'Agents', 'intermediate', true, '2026-05-06'),
+
+('general', 'autonomous-agent', 'Autonomous Agent', 'An AI system that can set its own sub-goals and take actions over an extended period to accomplish a higher-level objective, with minimal human oversight. Autonomous agents can handle open-ended tasks that take minutes or hours.', 'The autonomous agent was given access to a browser and email client, and independently scheduled all the meetings for the team''s product launch.', 'Agents', 'intermediate', true, '2026-05-07'),
+
+-- INFRASTRUCTURE
+('general', 'gpu', 'GPU', 'Graphics Processing Unit — a specialized processor originally designed for rendering graphics but now essential for training and running AI models due to its ability to perform massive parallel computations. GPUs are the primary hardware powering AI development.', 'Training a large language model from scratch can require thousands of GPUs running continuously for months.', 'Infrastructure', 'beginner', true, '2026-05-08'),
+
+('general', 'api', 'API', 'Application Programming Interface — a standardized way for software applications to communicate with each other. In AI, APIs let developers access model capabilities like text generation without building or hosting the model themselves.', 'The startup integrated Claude into their app using Anthropic''s API, adding AI features without training their own model.', 'Infrastructure', 'beginner', true, '2026-05-09'),
+
+('general', 'latency', 'Latency', 'The time delay between sending a request to an AI model and receiving the first response. Low latency is critical for real-time applications like voice assistants, coding tools, and live customer support.', 'The voice assistant''s low latency made conversations feel natural, with responses arriving in under 300 milliseconds.', 'Infrastructure', 'beginner', true, '2026-05-10'),
+
+('general', 'throughput', 'Throughput', 'The number of requests or tokens an AI system can process per unit of time. High throughput is essential for applications serving many users simultaneously at scale.', 'The team scaled up their inference cluster to increase throughput from 100 to 1,000 requests per second during peak traffic.', 'Infrastructure', 'intermediate', true, '2026-05-11'),
+
+('general', 'open-source-model', 'Open Source Model', 'An AI model whose weights and architecture are publicly released, allowing anyone to download, run, modify, and build on it freely. Open source models give developers full control and data privacy.', 'The startup chose an open source model like Llama to avoid per-token API costs and keep all their data on-premises.', 'Infrastructure', 'beginner', true, '2026-05-12'),
+
+('general', 'closed-source-model', 'Closed Source Model', 'An AI model whose weights and training details are kept private, accessible only through an API controlled by the developer. Closed source models are often more capable but less customizable.', 'GPT-4 is a closed source model — developers interact with it via API but cannot inspect or modify the underlying weights.', 'Infrastructure', 'beginner', true, '2026-05-13'),
+
+('general', 'benchmark', 'Benchmark', 'A standardized test used to measure and compare the performance of AI models on specific tasks like coding, reasoning, or language understanding. Benchmarks help researchers track progress and make fair comparisons.', 'The new model scored highest on the MMLU benchmark, suggesting strong general knowledge across dozens of academic subjects.', 'Infrastructure', 'beginner', true, '2026-05-14'),
+
+('general', 'model-serving', 'Model Serving', 'The infrastructure and process of deploying a trained AI model so it can receive requests and return predictions in production. Efficient model serving balances cost, speed, and reliability.', 'The engineering team optimized model serving to handle 10,000 simultaneous users without latency spikes.', 'Infrastructure', 'intermediate', true, '2026-05-15'),
+
+-- PRACTICAL
+('general', 'ai-safety', 'AI Safety', 'The field of research focused on ensuring AI systems behave as intended and do not cause unintended harm as they become more powerful. AI safety covers near-term risks like bias and long-term concerns about advanced AI behavior.', 'The AI safety team ran red-teaming exercises to find scenarios where the model could be manipulated into producing harmful content.', 'Practical', 'beginner', true, '2026-05-16'),
+
+('general', 'alignment', 'Alignment', 'The challenge of ensuring an AI system''s goals and behaviors match human values and intentions. A misaligned model might technically follow instructions while causing unintended consequences.', 'Researchers use RLHF to improve alignment by having humans rate model responses and training the model to prefer higher-rated outputs.', 'Practical', 'intermediate', true, '2026-05-17'),
+
+('general', 'bias-in-ai', 'Bias in AI', 'Systematic errors in AI model outputs that reflect unfair assumptions or imbalances in training data. Bias can cause models to perform differently across demographic groups or perpetuate harmful stereotypes.', 'The hiring tool''s bias in AI led it to rank male candidates higher than equally qualified female candidates because it learned from biased historical data.', 'Practical', 'beginner', true, '2026-05-18'),
+
+('general', 'supervised-learning', 'Supervised Learning', 'A type of machine learning where a model is trained on labeled data — examples paired with correct answers. The model learns to map inputs to outputs by minimizing errors against the provided labels.', 'The spam filter learned through supervised learning by training on thousands of emails already labeled as spam or not spam.', 'Practical', 'beginner', true, '2026-05-19'),
+
+('general', 'unsupervised-learning', 'Unsupervised Learning', 'A type of machine learning where the model finds patterns in data without any labels or predefined categories. Unsupervised learning is useful for discovering hidden structure in large, unlabeled datasets.', 'The unsupervised learning algorithm grouped customers into five distinct segments based on behavior, without being told how many groups to find.', 'Practical', 'intermediate', true, '2026-05-20'),
+
+('general', 'reinforcement-learning', 'Reinforcement Learning', 'A type of machine learning where an agent learns by taking actions in an environment and receiving rewards or penalties based on outcomes. The agent improves over time by maximizing cumulative reward.', 'DeepMind''s AlphaGo used reinforcement learning to master the game of Go by playing millions of games against itself.', 'Practical', 'intermediate', true, '2026-05-21'),
+
+('general', 'multimodal-ai', 'Multimodal AI', 'AI systems that can process and generate multiple types of data — such as text, images, audio, and video — within a single model. Multimodal AI enables richer, more natural human-computer interaction.', 'The multimodal AI analyzed a photo of a receipt and automatically extracted the total, date, and vendor into a spreadsheet.', 'Practical', 'beginner', true, '2026-05-22'),
+
+('general', 'underfitting', 'Underfitting', 'When a model is too simple to capture the underlying patterns in training data, resulting in poor performance on both training and new data. Underfitting is the opposite of overfitting.', 'The underfitting model predicted the same outcome for every input because it hadn''t learned any meaningful patterns from the training data.', 'Practical', 'intermediate', true, '2026-05-23'),
+
+('general', 'transfer-learning', 'Transfer Learning', 'A technique where knowledge gained from training on one task is reused as a starting point for a different but related task. Transfer learning lets developers build powerful models without training from scratch.', 'A vision model pre-trained on general photos used transfer learning to accurately detect tumors in X-rays after training on just a few thousand medical images.', 'Practical', 'intermediate', true, '2026-05-24'),
+
+('general', 'generative-ai', 'Generative AI', 'AI systems capable of creating new content — text, images, audio, code, or video — that did not previously exist. Generative AI learns patterns from existing data and uses them to produce original outputs.', 'The marketing team used generative AI to draft product descriptions, social media posts, and ad copy in minutes.', 'Fundamentals', 'beginner', true, '2026-05-25'),
+
+('general', 'diffusion-model', 'Diffusion Model', 'A class of generative AI models that create images or audio by learning to reverse a process of gradually adding noise to data. Diffusion models power tools like Stable Diffusion and DALL-E.', 'The designer used a diffusion model to generate photorealistic concept art from a simple text description in under ten seconds.', 'Fundamentals', 'advanced', true, '2026-05-26'),
+
+('general', 'natural-language-processing', 'Natural Language Processing (NLP)', 'The branch of AI focused on enabling computers to understand, interpret, and generate human language. NLP underlies applications like machine translation, sentiment analysis, and chatbots.', 'Natural language processing allowed the app to detect frustration in customer messages and automatically escalate them to a human agent.', 'Fundamentals', 'beginner', true, '2026-05-27'),
+
+('general', 'computer-vision', 'Computer Vision', 'The field of AI that enables computers to interpret and understand visual information from images and video. Computer vision powers facial recognition, self-driving cars, and automated quality control.', 'The warehouse used computer vision to automatically count inventory by analyzing camera footage rather than requiring manual counts.', 'Fundamentals', 'beginner', true, '2026-05-28'),
+
+('general', 'rlhf', 'Reinforcement Learning from Human Feedback (RLHF)', 'A training technique where a language model is refined based on human preferences rather than raw data alone. Humans rank model outputs, those rankings train a reward model, and that reward model guides the LLM toward better responses.', 'RLHF was used to train ChatGPT to give helpful, harmless answers by incorporating preferences from thousands of human raters.', 'Practical', 'advanced', true, '2026-05-29'),
+
+('general', 'synthetic-data', 'Synthetic Data', 'Artificially generated data that mimics real-world data, used to train AI models when real data is scarce, expensive, or private. Synthetic data can be generated by AI models themselves to bootstrap new training runs.', 'The healthcare startup trained their diagnostic model on synthetic data that mimicked real patient records without exposing any private information.', 'Practical', 'intermediate', true, '2026-05-30'),
+
+('general', 'model-distillation', 'Model Distillation', 'A technique where a smaller, faster model (the student) is trained to mimic the behavior of a larger, more capable model (the teacher). Distillation produces efficient models that retain much of the original''s capability at a fraction of the cost.', 'The team used model distillation to compress a 70-billion parameter model into one that ran on a laptop while maintaining 90% of its accuracy.', 'Fundamentals', 'advanced', true, '2026-05-31'),
+
+('general', 'grounding', 'Grounding', 'The process of connecting an AI model''s outputs to verified, real-world information sources to reduce hallucinations. Grounded models retrieve or cite facts before answering rather than relying solely on memorized training data.', 'The grounded AI assistant searched the company''s documentation before answering support questions, ensuring every response was factually accurate.', 'LLMs', 'intermediate', true, '2026-06-01')
+
+on conflict (slug, vertical_id) do nothing;

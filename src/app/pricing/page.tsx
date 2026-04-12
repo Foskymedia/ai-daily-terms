@@ -126,7 +126,7 @@ export default function PricingPage() {
               </ul>
 
               <button
-                onClick={() => handleCheckout(plan.priceId, plan.name)}
+                onClick={() => plan.priceId && handleCheckout(plan.priceId, plan.name)}
                 disabled={loading === plan.name}
                 className={`w-full py-3 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 ${plan.highlight
                     ? 'bg-blue-600 text-white hover:bg-blue-700'

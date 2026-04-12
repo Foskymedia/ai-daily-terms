@@ -44,6 +44,36 @@ export default async function DashboardPage() {
   const isPro = profile?.tier === 'pro' || profile?.tier === 'lifetime'
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
 
+  // Quiz stats (Pro only)
+  let quizzableCount = 0
+  let masteredQuizCount = 0
+  if (isPro) {
+    const [quizzableResult, masteredProgressResult] = await Promise.all([
+      supabase
+        .from('terms')
+        .select('id', { count: 'exact', head: true })
+        .eq('vertical_id', 'general')
+        .eq('published', true)
+        .not('quiz_question', 'is', null),
+      supabase
+        .from('user_progress')
+        .select('term_id')
+        .eq('user_id', user.id)
+        .eq('status', 'mastered'),
+    ])
+    quizzableCount = quizzableResult.count ?? 0
+    const masteredTermIds = masteredProgressResult.data?.map((p: { term_id: string }) => p.term_id) ?? []
+    if (masteredTermIds.length > 0) {
+      const { count } = await supabase
+        .from('terms')
+        .select('id', { count: 'exact', head: true })
+        .eq('vertical_id', 'general')
+        .not('quiz_question', 'is', null)
+        .in('id', masteredTermIds)
+      masteredQuizCount = count ?? 0
+    }
+  }
+
   return (
     <div className="max-w-2xl mx-auto">
       {/* Welcome banner */}
@@ -102,18 +132,44 @@ export default async function DashboardPage() {
 
       {/* Pro: quick links */}
       {isPro && (
-        <div className="mt-8 grid grid-cols-2 gap-4">
-          <Link href="/dashboard/glossary" className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-sm transition-shadow">
-            <div className="text-2xl mb-2">📚</div>
-            <div className="font-semibold text-gray-900">Glossary</div>
-            <div className="text-sm text-gray-500">Browse all terms</div>
-          </Link>
-          <Link href="/dashboard/flashcards" className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-sm transition-shadow">
-            <div className="text-2xl mb-2">🃏</div>
-            <div className="font-semibold text-gray-900">Flashcards</div>
-            <div className="text-sm text-gray-500">Practice & review</div>
-          </Link>
-        </div>
+        <>
+          <div className="mt-8 grid grid-cols-3 gap-4">
+            <Link href="/dashboard/glossary" className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-sm transition-shadow">
+              <div className="text-2xl mb-2">📚</div>
+              <div className="font-semibold text-gray-900">Glossary</div>
+              <div className="text-sm text-gray-500">Browse all terms</div>
+            </Link>
+            <Link href="/dashboard/flashcards" className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-sm transition-shadow">
+              <div className="text-2xl mb-2">🃏</div>
+              <div className="font-semibold text-gray-900">Flashcards</div>
+              <div className="text-sm text-gray-500">Practice & review</div>
+            </Link>
+            <Link href="/dashboard/quiz" className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-sm transition-shadow">
+              <div className="text-2xl mb-2">🧠</div>
+              <div className="font-semibold text-gray-900">Quiz Mode</div>
+              <div className="text-sm text-gray-500">Test your knowledge</div>
+            </Link>
+          </div>
+
+          {/* Quiz stats */}
+          <div className="mt-4 bg-white rounded-2xl border border-gray-100 p-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-900">Quiz Score</p>
+                <p className="text-sm text-gray-500 mt-0.5">
+                  <span className="font-semibold text-gray-900">{masteredQuizCount}</span> mastered out of{' '}
+                  <span className="font-semibold text-gray-900">{quizzableCount}</span> quizzable terms
+                </p>
+              </div>
+              <Link
+                href="/dashboard/quiz"
+                className="text-sm text-blue-600 font-medium hover:text-blue-700 transition-colors"
+              >
+                Take Quiz →
+              </Link>
+            </div>
+          </div>
+        </>
       )}
     </div>
   )

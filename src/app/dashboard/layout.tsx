@@ -46,6 +46,12 @@ export default async function DashboardLayout({ children }: { children: React.Re
             >
               Flashcards {!isPro && <span className="text-xs bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded ml-1">Pro</span>}
             </Link>
+            <Link
+              href="/dashboard/quiz"
+              className={`text-sm px-3 py-2 rounded-lg transition-colors ${isPro ? 'text-gray-600 hover:bg-gray-50' : 'text-gray-400 cursor-not-allowed'}`}
+            >
+              Quiz {!isPro && <span className="text-xs bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded ml-1">Pro</span>}
+            </Link>
           </div>
           <div className="flex items-center gap-3">
             {!isPro && (

@@ -12,6 +12,22 @@ export interface Term {
   published: boolean
   publish_date: string | null
   created_at: string
+  // Enrichment fields (v1 seed pack)
+  short_definition: string | null
+  plain_explanation: string | null
+  use_case: string | null
+  why_it_matters: string | null
+  common_mistake: string | null
+  related_terms: string[] | null
+  // Quiz fields
+  quiz_question: string | null
+  quiz_type: string | null
+  option_a: string | null
+  option_b: string | null
+  option_c: string | null
+  option_d: string | null
+  correct_answer: string | null
+  quiz_explanation: string | null
 }
 
 export interface Profile {

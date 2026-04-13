@@ -33,7 +33,7 @@ export default async function AuthPage() {
   const term = await getTodaysTerm()
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 flex">
       {/* Left panel — benefits + blurred term preview (desktop only) */}
       <div className="hidden lg:flex flex-col justify-center w-1/2 bg-blue-600 p-16">
         <Link href="/" className="text-white/70 text-sm mb-12 hover:text-white transition-colors">

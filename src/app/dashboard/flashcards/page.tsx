@@ -62,7 +62,6 @@ export default function FlashcardsPage() {
       const current = terms[currentIndex]
       if (!current) return
 
-      // Mark flashcard_done on first interaction of the session
       if (!dailyProgressCalled.current) {
         dailyProgressCalled.current = true
         fetch('/api/daily-progress', {
@@ -109,7 +108,6 @@ export default function FlashcardsPage() {
     [terms, currentIndex, userId]
   )
 
-  // Keyboard shortcuts
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (sessionDone || loading || !isPro) return
@@ -168,16 +166,16 @@ export default function FlashcardsPage() {
     }
   }
 
-  // ── Loading ───────────────────────────────────────────────────────
+  // ── Loading skeleton ──────────────────────────────────────────────
   if (loading) {
     return (
       <div className="max-w-2xl mx-auto">
         <div className="mb-8 flex items-center justify-between">
-          <div className="h-8 w-36 bg-gray-200 rounded-lg animate-pulse" />
-          <div className="h-5 w-16 bg-gray-200 rounded animate-pulse" />
+          <div className="h-8 w-36 bg-gray-200 dark:bg-slate-700 rounded-lg animate-pulse" />
+          <div className="h-5 w-16 bg-gray-200 dark:bg-slate-700 rounded animate-pulse" />
         </div>
-        <div className="w-full bg-gray-100 rounded-full h-1.5 mb-8" />
-        <div className="w-full rounded-2xl bg-gray-200 animate-pulse" style={{ minHeight: '280px' }} />
+        <div className="w-full bg-gray-100 dark:bg-slate-700 rounded-full h-1.5 mb-8" />
+        <div className="w-full rounded-2xl bg-gray-200 dark:bg-slate-700 animate-pulse" style={{ minHeight: '280px' }} />
       </div>
     )
   }
@@ -187,8 +185,8 @@ export default function FlashcardsPage() {
     return (
       <div className="max-w-2xl mx-auto text-center py-16">
         <div className="text-5xl mb-4">🔒</div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-3">Flashcards is a Pro feature</h1>
-        <p className="text-gray-600 mb-8">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-100 mb-3">Flashcards is a Pro feature</h1>
+        <p className="text-gray-600 dark:text-slate-300 mb-8">
           Upgrade to Pro to practice with flashcards and reinforce your AI vocabulary.
         </p>
         <Link href="/pricing" className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors">
@@ -199,7 +197,7 @@ export default function FlashcardsPage() {
   }
 
   if (terms.length === 0) {
-    return <div className="text-center text-gray-400 py-16">No terms available yet.</div>
+    return <div className="text-center text-gray-500 dark:text-slate-400 py-16">No terms available yet.</div>
   }
 
   // ── Session complete screen ──────────────────────────────────────
@@ -208,26 +206,26 @@ export default function FlashcardsPage() {
       <div className="max-w-2xl mx-auto">
         <div className="text-center py-8">
           <div className="text-5xl mb-4">🎉</div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Session Complete!</h1>
-          <p className="text-gray-600 mb-8">You reviewed {terms.length} cards.</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100 mb-2">Session Complete!</h1>
+          <p className="text-gray-600 dark:text-slate-300 mb-8">You reviewed {terms.length} cards.</p>
 
-          <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm mb-8">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-8 shadow-sm mb-8">
             <div className="flex justify-center gap-16">
               <div>
-                <div className="text-4xl font-bold text-green-600">{gotItCount}</div>
-                <div className="text-sm text-gray-600 mt-1">Got it ✓</div>
+                <div className="text-4xl font-bold text-green-600 dark:text-green-400">{gotItCount}</div>
+                <div className="text-sm text-gray-600 dark:text-slate-400 mt-1">Got it ✓</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-amber-500">{reviewAgainCount}</div>
-                <div className="text-sm text-gray-600 mt-1">Review again ↺</div>
+                <div className="text-4xl font-bold text-amber-500 dark:text-amber-400">{reviewAgainCount}</div>
+                <div className="text-sm text-gray-600 dark:text-slate-400 mt-1">Review again ↺</div>
               </div>
             </div>
           </div>
 
           {/* Quiz nudge */}
-          <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5 mb-6 text-center">
-            <p className="text-sm font-semibold text-blue-900 mb-1">Ready to test yourself?</p>
-            <p className="text-sm text-blue-700 mb-3">Take the quiz to lock in what you just practiced.</p>
+          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 rounded-2xl p-5 mb-6 text-center">
+            <p className="text-sm font-semibold text-blue-900 dark:text-blue-300 mb-1">Ready to test yourself?</p>
+            <p className="text-sm text-blue-700 dark:text-blue-400 mb-3">Take the quiz to lock in what you just practiced.</p>
             <Link
               href="/dashboard/quiz"
               className="inline-block text-sm bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
@@ -253,7 +251,7 @@ export default function FlashcardsPage() {
             </button>
             <Link
               href="/dashboard"
-              className="px-6 py-3 rounded-xl border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
+              className="px-6 py-3 rounded-xl border border-gray-200 dark:border-white/[0.08] text-gray-700 dark:text-slate-300 font-semibold hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
             >
               Back to Dashboard
             </Link>
@@ -270,12 +268,12 @@ export default function FlashcardsPage() {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Flashcards</h1>
-        <span className="text-sm text-gray-500">{currentIndex + 1} of {terms.length}</span>
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-slate-100">Flashcards</h1>
+        <span className="text-sm text-gray-500 dark:text-slate-400">{currentIndex + 1} of {terms.length}</span>
       </div>
 
       {/* Progress bar */}
-      <div className="w-full bg-gray-100 rounded-full h-1.5 mb-2">
+      <div className="w-full bg-gray-100 dark:bg-slate-700 rounded-full h-1.5 mb-2">
         <div
           className="bg-blue-500 h-1.5 rounded-full transition-all duration-300"
           style={{ width: `${progress}%` }}
@@ -284,15 +282,15 @@ export default function FlashcardsPage() {
 
       {/* Session score */}
       <div className="flex items-center gap-4 mb-5 text-sm">
-        <span className="text-green-600 font-medium">{gotItCount} got it ✓</span>
-        <span className="text-amber-500 font-medium">{reviewAgainCount} to review ↺</span>
+        <span className="text-green-600 dark:text-green-400 font-medium">{gotItCount} got it ✓</span>
+        <span className="text-amber-500 dark:text-amber-400 font-medium">{reviewAgainCount} to review ↺</span>
       </div>
 
       {/* Swipe hint */}
-      <p className="text-xs text-center text-gray-400 mb-4 md:hidden">
+      <p className="text-xs text-center text-gray-500 dark:text-slate-400 mb-4 md:hidden">
         Tap to flip · Swipe left = Got it · Swipe right = Review again
       </p>
-      <p className="text-xs text-center text-gray-400 mb-4 hidden md:block">
+      <p className="text-xs text-center text-gray-500 dark:text-slate-400 mb-4 hidden md:block">
         Space = flip · → = Got it · ← = Review again
       </p>
 
@@ -314,17 +312,17 @@ export default function FlashcardsPage() {
         >
           {/* Front */}
           <div
-            className="absolute inset-0 bg-white rounded-2xl border border-gray-100 shadow-sm p-8 flex flex-col items-center justify-center text-center"
+            className="absolute inset-0 bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] shadow-sm p-8 flex flex-col items-center justify-center text-center"
             style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
           >
-            <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-4">Term</p>
-            <h2 className="text-2xl font-bold text-gray-900 leading-tight">{current.term}</h2>
+            <p className="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide font-medium mb-4">Term</p>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100 leading-tight">{current.term}</h2>
             {current.category && (
-              <span className="mt-4 text-xs bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full font-medium">
+              <span className="mt-4 text-xs bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2.5 py-1 rounded-full font-medium">
                 {current.category}
               </span>
             )}
-            <p className="text-sm text-gray-500 mt-6">Tap to reveal definition</p>
+            <p className="text-sm text-gray-500 dark:text-slate-400 mt-6">Tap to reveal definition</p>
           </div>
 
           {/* Back */}
@@ -352,7 +350,7 @@ export default function FlashcardsPage() {
         <div className="flex items-center justify-center gap-4 mt-6">
           <button
             onClick={() => markTerm(false)}
-            className="flex-1 max-w-[180px] py-3.5 rounded-xl bg-amber-100 text-amber-700 font-semibold hover:bg-amber-200 transition-colors text-sm flex items-center justify-center gap-2"
+            className="flex-1 max-w-[180px] py-3.5 rounded-xl bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 font-semibold hover:bg-amber-200 dark:hover:bg-amber-900/50 transition-colors text-sm flex items-center justify-center gap-2"
           >
             ↺ Review Again
           </button>
@@ -367,7 +365,7 @@ export default function FlashcardsPage() {
         <div className="flex justify-center mt-6">
           <button
             onClick={() => setFlipped(true)}
-            className="px-8 py-3 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+            className="px-8 py-3 rounded-xl border border-gray-200 dark:border-white/[0.08] text-sm font-medium text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
           >
             Reveal Definition
           </button>

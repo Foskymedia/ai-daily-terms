@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import ThemeToggle from '@/components/ThemeToggle'
 
 const plans = [
   {
@@ -90,7 +91,7 @@ const faqs = [
 ]
 
 function Check({ locked }: { locked?: boolean }) {
-  if (locked) return <span className="text-gray-300 text-lg">✗</span>
+  if (locked) return <span className="text-gray-300 dark:text-slate-600 text-lg">✗</span>
   return <span className="text-green-500 text-lg">✓</span>
 }
 
@@ -132,19 +133,22 @@ export default function PricingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
       {/* Nav */}
-      <nav className="bg-white border-b border-gray-100">
+      <nav className="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-white/[0.08]">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-gray-900">AI Daily Terms</Link>
-          <Link href="/auth" className="text-sm text-gray-600 hover:text-gray-900">Sign in</Link>
+          <Link href="/" className="text-xl font-bold text-gray-900 dark:text-slate-100">AI Daily Terms</Link>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <Link href="/auth" className="text-sm text-gray-600 dark:text-slate-300 hover:text-gray-900 dark:hover:text-slate-100">Sign in</Link>
+          </div>
         </div>
       </nav>
 
       <div className="max-w-5xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h1 className="text-[28px] sm:text-4xl font-bold text-gray-900 mb-4">Simple, transparent pricing</h1>
-          <p className="text-lg sm:text-xl text-gray-600">Start free. Upgrade when you&apos;re ready to go deeper.</p>
+          <h1 className="text-[28px] sm:text-4xl font-bold text-gray-900 dark:text-slate-100 mb-4">Simple, transparent pricing</h1>
+          <p className="text-lg sm:text-xl text-gray-600 dark:text-slate-300">Start free. Upgrade when you&apos;re ready to go deeper.</p>
         </div>
 
         {/* Pricing cards */}
@@ -152,8 +156,10 @@ export default function PricingPage() {
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`bg-white rounded-2xl p-6 border-2 relative flex flex-col ${
-                plan.highlight ? 'border-blue-500 shadow-lg' : 'border-gray-100'
+              className={`bg-white dark:bg-slate-800 rounded-2xl p-6 border-2 relative flex flex-col ${
+                plan.highlight
+                  ? 'border-blue-500 shadow-lg'
+                  : 'border-gray-100 dark:border-white/[0.08]'
               }`}
             >
               {plan.highlight && (
@@ -162,16 +168,16 @@ export default function PricingPage() {
                 </div>
               )}
               <div className="mb-6">
-                <h2 className="text-lg font-bold text-gray-900 mb-1">{plan.name}</h2>
+                <h2 className="text-lg font-bold text-gray-900 dark:text-slate-100 mb-1">{plan.name}</h2>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-gray-900">{plan.price}</span>
+                  <span className="text-3xl font-bold text-gray-900 dark:text-slate-100">{plan.price}</span>
                 </div>
-                <p className="text-sm text-gray-500 mt-0.5">{plan.billing}</p>
+                <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">{plan.billing}</p>
               </div>
 
               <ul className="space-y-2 mb-6 flex-1">
                 {plan.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-sm text-gray-600">
+                  <li key={f} className="flex items-start gap-2 text-sm text-gray-600 dark:text-slate-300">
                     <span className="text-green-500 mt-0.5 flex-shrink-0">✓</span>
                     {f}
                   </li>
@@ -184,7 +190,7 @@ export default function PricingPage() {
                 className={`w-full py-3 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 ${
                   plan.highlight
                     ? 'bg-blue-600 text-white hover:bg-blue-700'
-                    : 'bg-gray-900 text-white hover:bg-gray-700'
+                    : 'bg-gray-900 dark:bg-slate-700 text-white hover:bg-gray-700 dark:hover:bg-slate-600'
                 }`}
               >
                 {loading === plan.name ? 'Loading...' : plan.cta}
@@ -195,21 +201,21 @@ export default function PricingPage() {
 
         {/* Feature comparison table */}
         <div className="mb-20">
-          <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">Compare plans</h2>
-          <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100 text-center mb-8">Compare plans</h2>
+          <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="text-left p-4 font-semibold text-gray-900">Feature</th>
-                  <th className="text-center p-4 font-semibold text-gray-900">Free</th>
-                  <th className="text-center p-4 font-semibold text-blue-600">Pro</th>
-                  <th className="text-center p-4 font-semibold text-gray-900">Lifetime</th>
+                <tr className="border-b border-gray-100 dark:border-white/[0.08]">
+                  <th className="text-left p-4 font-semibold text-gray-900 dark:text-slate-100">Feature</th>
+                  <th className="text-center p-4 font-semibold text-gray-900 dark:text-slate-100">Free</th>
+                  <th className="text-center p-4 font-semibold text-blue-600 dark:text-blue-400">Pro</th>
+                  <th className="text-center p-4 font-semibold text-gray-900 dark:text-slate-100">Lifetime</th>
                 </tr>
               </thead>
               <tbody>
                 {comparisonRows.map((row, i) => (
-                  <tr key={row.feature} className={i % 2 === 0 ? 'bg-gray-50/50' : ''}>
-                    <td className="p-4 text-gray-700">{row.feature}</td>
+                  <tr key={row.feature} className={i % 2 === 0 ? 'bg-gray-50/50 dark:bg-slate-700/30' : ''}>
+                    <td className="p-4 text-gray-700 dark:text-slate-200">{row.feature}</td>
                     <td className="p-4 text-center"><Check locked={!row.free} /></td>
                     <td className="p-4 text-center"><Check locked={!row.pro} /></td>
                     <td className="p-4 text-center"><Check locked={!row.lifetime} /></td>
@@ -222,19 +228,19 @@ export default function PricingPage() {
 
         {/* FAQ */}
         <div className="max-w-2xl mx-auto mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">Frequently asked questions</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100 text-center mb-8">Frequently asked questions</h2>
           <div className="space-y-3">
             {faqs.map((faq, i) => (
-              <div key={i} className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+              <div key={i} className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] overflow-hidden">
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full text-left p-5 flex items-center justify-between font-semibold text-gray-900 hover:bg-gray-50 transition-colors"
+                  className="w-full text-left p-5 flex items-center justify-between font-semibold text-gray-900 dark:text-slate-100 hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors"
                 >
                   {faq.q}
-                  <span className="text-gray-400 ml-4 flex-shrink-0">{openFaq === i ? '−' : '+'}</span>
+                  <span className="text-gray-400 dark:text-slate-500 ml-4 flex-shrink-0">{openFaq === i ? '−' : '+'}</span>
                 </button>
                 {openFaq === i && (
-                  <div className="px-5 pb-5 text-gray-600 text-sm leading-relaxed border-t border-gray-50">
+                  <div className="px-5 pb-5 text-gray-600 dark:text-slate-300 text-sm leading-relaxed border-t border-gray-50 dark:border-white/[0.05]">
                     <p className="pt-4">{faq.a}</p>
                   </div>
                 )}
@@ -243,25 +249,25 @@ export default function PricingPage() {
           </div>
         </div>
 
-        <p className="text-center text-sm text-gray-500">
+        <p className="text-center text-sm text-gray-500 dark:text-slate-400">
           All payments processed securely by Stripe. Cancel anytime.{' '}
-          <Link href="/billing" className="hover:text-gray-600 underline">Billing help</Link>
+          <Link href="/billing" className="hover:text-gray-600 dark:hover:text-slate-300 underline">Billing help</Link>
         </p>
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 py-8">
+      <footer className="border-t border-gray-100 dark:border-white/[0.08] py-8">
         <div className="max-w-5xl mx-auto px-4">
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-gray-400 mb-3">
-            <Link href="/privacy" className="hover:text-gray-600">Privacy</Link>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-gray-400 dark:text-slate-500 mb-3">
+            <Link href="/privacy" className="hover:text-gray-600 dark:hover:text-slate-300">Privacy</Link>
             <span>·</span>
-            <Link href="/terms" className="hover:text-gray-600">Terms</Link>
+            <Link href="/terms" className="hover:text-gray-600 dark:hover:text-slate-300">Terms</Link>
             <span>·</span>
-            <Link href="/contact" className="hover:text-gray-600">Contact</Link>
+            <Link href="/contact" className="hover:text-gray-600 dark:hover:text-slate-300">Contact</Link>
             <span>·</span>
-            <Link href="/billing" className="hover:text-gray-600">Billing</Link>
+            <Link href="/billing" className="hover:text-gray-600 dark:hover:text-slate-300">Billing</Link>
           </div>
-          <p className="text-center text-xs text-gray-400">© 2026 Fosky Media</p>
+          <p className="text-center text-xs text-gray-400 dark:text-slate-500">© 2026 Fosky Media</p>
         </div>
       </footer>
     </div>

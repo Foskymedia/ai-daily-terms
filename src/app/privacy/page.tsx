@@ -1,33 +1,37 @@
 import Link from 'next/link'
+import ThemeToggle from '@/components/ThemeToggle'
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-white">
-      <nav className="border-b border-gray-100">
+    <div className="min-h-screen bg-white dark:bg-slate-900">
+      <nav className="border-b border-gray-100 dark:border-white/[0.08]">
         <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-gray-900">AI Daily Terms</Link>
-          <Link href="/auth" className="text-sm text-gray-600 hover:text-gray-900">Sign in</Link>
+          <Link href="/" className="text-xl font-bold text-gray-900 dark:text-slate-100">AI Daily Terms</Link>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <Link href="/auth" className="text-sm text-gray-600 dark:text-slate-300 hover:text-gray-900 dark:hover:text-slate-100">Sign in</Link>
+          </div>
         </div>
       </nav>
 
       <div className="max-w-3xl mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Privacy Policy</h1>
-        <p className="text-sm text-gray-400 mb-12">Last updated: April 2026</p>
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-slate-100 mb-2">Privacy Policy</h1>
+        <p className="text-sm text-gray-500 dark:text-slate-400 mb-12">Last updated: April 2026</p>
 
-        <div className="prose prose-gray max-w-none space-y-8 text-gray-600 leading-relaxed">
+        <div className="prose prose-gray max-w-none space-y-8 text-gray-600 dark:text-slate-300 leading-relaxed">
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">1. Who we are</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100 mb-3">1. Who we are</h2>
             <p>
               AI Daily Terms is operated by Fosky Media. We provide a daily AI vocabulary service
               at aidailyterms.com. Questions? Email us at{' '}
-              <a href="mailto:foskymedia@gmail.com" className="text-blue-600 hover:underline">
+              <a href="mailto:foskymedia@gmail.com" className="text-blue-600 dark:text-blue-400 hover:underline">
                 foskymedia@gmail.com
               </a>.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">2. What data we collect</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100 mb-3">2. What data we collect</h2>
             <p>We collect only what&apos;s necessary to provide the service:</p>
             <ul className="list-disc pl-6 mt-3 space-y-2">
               <li><strong>Account data:</strong> email address, name, and password (hashed) when you sign up.</li>
@@ -38,7 +42,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">3. How we use your data</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100 mb-3">3. How we use your data</h2>
             <ul className="list-disc pl-6 space-y-2">
               <li>To provide and improve the AI Daily Terms service.</li>
               <li>To send you the daily term and product-related emails (you can opt out).</li>
@@ -48,7 +52,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">4. Third-party services</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100 mb-3">4. Third-party services</h2>
             <p>We use the following third-party services to operate AI Daily Terms:</p>
             <ul className="list-disc pl-6 mt-3 space-y-2">
               <li>
@@ -63,7 +67,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">5. Data retention</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100 mb-3">5. Data retention</h2>
             <p>
               We keep your data as long as your account is active. If you delete your account,
               we remove your personal data within 30 days. Anonymised usage data may be retained
@@ -72,11 +76,11 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">6. Your rights</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100 mb-3">6. Your rights</h2>
             <p>
               You have the right to access, correct, or delete your personal data at any time.
               To exercise these rights, email us at{' '}
-              <a href="mailto:foskymedia@gmail.com" className="text-blue-600 hover:underline">
+              <a href="mailto:foskymedia@gmail.com" className="text-blue-600 dark:text-blue-400 hover:underline">
                 foskymedia@gmail.com
               </a>
               . We&apos;ll respond within 30 days.
@@ -84,7 +88,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">7. Cookies</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100 mb-3">7. Cookies</h2>
             <p>
               We use session cookies to keep you logged in. We don&apos;t use third-party tracking
               cookies or sell your data to advertisers.
@@ -92,7 +96,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">8. Changes to this policy</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100 mb-3">8. Changes to this policy</h2>
             <p>
               We may update this policy occasionally. We&apos;ll notify you by email for material
               changes. Continued use of the service constitutes acceptance of the updated policy.
@@ -100,10 +104,10 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">9. Contact</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100 mb-3">9. Contact</h2>
             <p>
               For privacy concerns, contact us at{' '}
-              <a href="mailto:foskymedia@gmail.com" className="text-blue-600 hover:underline">
+              <a href="mailto:foskymedia@gmail.com" className="text-blue-600 dark:text-blue-400 hover:underline">
                 foskymedia@gmail.com
               </a>
               .
@@ -112,17 +116,17 @@ export default function PrivacyPage() {
         </div>
       </div>
 
-      <footer className="border-t border-gray-100 py-8">
-        <div className="max-w-3xl mx-auto px-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-gray-400">
-          <Link href="/privacy" className="hover:text-gray-600">Privacy</Link>
+      <footer className="border-t border-gray-100 dark:border-white/[0.08] py-8">
+        <div className="max-w-3xl mx-auto px-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-gray-400 dark:text-slate-500">
+          <Link href="/privacy" className="hover:text-gray-600 dark:hover:text-slate-300">Privacy</Link>
           <span>·</span>
-          <Link href="/terms" className="hover:text-gray-600">Terms</Link>
+          <Link href="/terms" className="hover:text-gray-600 dark:hover:text-slate-300">Terms</Link>
           <span>·</span>
-          <Link href="/contact" className="hover:text-gray-600">Contact</Link>
+          <Link href="/contact" className="hover:text-gray-600 dark:hover:text-slate-300">Contact</Link>
           <span>·</span>
-          <Link href="/billing" className="hover:text-gray-600">Billing</Link>
+          <Link href="/billing" className="hover:text-gray-600 dark:hover:text-slate-300">Billing</Link>
         </div>
-        <p className="text-center text-xs text-gray-400 mt-3">© 2026 Fosky Media</p>
+        <p className="text-center text-xs text-gray-400 dark:text-slate-500 mt-3">© 2026 Fosky Media</p>
       </footer>
     </div>
   )

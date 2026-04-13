@@ -247,11 +247,11 @@ export default async function DashboardPage() {
 
         <div className="flex items-center gap-2">
           {/* Streak badge */}
-          <div className="flex items-center gap-1.5 bg-orange-50 text-orange-600 px-3 py-1.5 rounded-full text-sm font-semibold">
+          <div className="flex items-center gap-1.5 bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 px-3 py-1.5 rounded-full text-sm font-semibold">
             🔥 {currentStreak} day{currentStreak !== 1 ? 's' : ''}
           </div>
           {/* XP level badge */}
-          <div className="flex items-center gap-1.5 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full text-sm font-semibold">
+          <div className="flex items-center gap-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 px-3 py-1.5 rounded-full text-sm font-semibold">
             ⭐ Level {xpLevelInfo.level}
           </div>
         </div>
@@ -259,28 +259,28 @@ export default async function DashboardPage() {
 
       {/* Streak milestone message */}
       {streakMilestoneMsg && (
-        <div className="bg-orange-50 border border-orange-100 rounded-xl px-4 py-3 mb-5 text-sm text-orange-700 font-medium">
+        <div className="bg-orange-50 dark:bg-orange-900/30 border border-orange-100 dark:border-orange-800/40 rounded-xl px-4 py-3 mb-5 text-sm text-orange-700 dark:text-orange-400 font-medium">
           {streakMilestoneMsg}
         </div>
       )}
 
       {/* XP + Level progress bar */}
-      <div className="bg-white rounded-2xl border border-gray-100 px-5 py-4 mb-5">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] px-5 py-4 mb-5">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-semibold text-gray-600">
+          <span className="text-xs font-semibold text-gray-600 dark:text-slate-300">
             Level {xpLevelInfo.level} — {xpLevelInfo.name}
           </span>
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-gray-500 dark:text-slate-400">
             {displayXP} XP total
           </span>
         </div>
-        <div className="w-full bg-gray-100 rounded-full h-2">
+        <div className="w-full bg-gray-100 dark:bg-slate-700 rounded-full h-2">
           <div
             className="bg-blue-600 h-2 rounded-full transition-all duration-500"
             style={{ width: `${xpPct}%` }}
           />
         </div>
-        <p className="text-xs text-gray-500 mt-1.5">
+        <p className="text-xs text-gray-500 dark:text-slate-400 mt-1.5">
           {xpNeeded !== null
             ? `${xpInLevel} / ${xpInLevel + xpNeeded} XP · ${xpNeeded} to ${getLevelFromXP(displayXP + xpNeeded).name}`
             : 'Max level reached — AI Fluent!'}
@@ -297,17 +297,17 @@ export default async function DashboardPage() {
 
       {/* Today's term heading */}
       <div className="mb-3">
-        <h1 className="text-[28px] md:text-3xl font-bold text-gray-900">
+        <h1 className="text-[28px] md:text-3xl font-bold text-gray-900 dark:text-slate-100">
           {isPro ? 'Your AI term for today' : "Today's free term"}
         </h1>
       </div>
 
       {/* Today's term card */}
       {todaysTerm ? (
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 md:p-8 shadow-sm mb-5">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-5 md:p-8 shadow-sm mb-5">
           <div className="flex items-center gap-2 flex-wrap mb-4">
             {todaysTerm.category && (
-              <span className="text-xs bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full font-medium">
+              <span className="text-xs bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2.5 py-1 rounded-full font-medium">
                 {todaysTerm.category}
               </span>
             )}
@@ -318,24 +318,24 @@ export default async function DashboardPage() {
             )}
           </div>
 
-          <h2 className="text-[32px] md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+          <h2 className="text-[32px] md:text-4xl font-bold text-gray-900 dark:text-slate-100 mb-4 leading-tight">
             {todaysTerm.term}
           </h2>
-          <p className="text-gray-700 leading-[1.7] text-[17px] md:text-lg mb-6">
+          <p className="text-gray-700 dark:text-slate-200 leading-[1.7] text-[17px] md:text-lg mb-6">
             {todaysTerm.plain_explanation ?? todaysTerm.definition}
           </p>
 
           {todaysTerm.example_sentence && (
-            <div className="bg-gray-50 rounded-xl p-4 md:p-5 border-l-4 border-blue-400 mb-6">
-              <p className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-2">Example</p>
-              <p className="text-gray-700 italic text-sm md:text-base">
+            <div className="bg-gray-50 dark:bg-slate-700/50 rounded-xl p-4 md:p-5 border-l-4 border-blue-400 mb-6">
+              <p className="text-xs text-gray-500 dark:text-slate-400 font-medium uppercase tracking-wide mb-2">Example</p>
+              <p className="text-gray-700 dark:text-slate-300 italic text-sm md:text-base">
                 &ldquo;{todaysTerm.example_sentence}&rdquo;
               </p>
             </div>
           )}
 
           {/* Action buttons + completion indicator */}
-          <div className="space-y-4 pt-2 border-t border-gray-50">
+          <div className="space-y-4 pt-2 border-t border-gray-50 dark:border-white/[0.05]">
             <TodayTermActions
               termId={todaysTerm.id}
               termName={todaysTerm.term}
@@ -347,18 +347,18 @@ export default async function DashboardPage() {
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center text-gray-500 mb-5">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-12 text-center text-gray-500 dark:text-slate-400 mb-5">
           No term published yet for today. Check back soon.
         </div>
       )}
 
       {/* Free user: quiz upsell after term */}
       {!isPro && todaysTerm && (
-        <div className="bg-purple-50 border border-purple-100 rounded-2xl p-5 mb-5">
-          <p className="text-sm font-semibold text-purple-900 mb-1">
+        <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-100 dark:border-purple-800/40 rounded-2xl p-5 mb-5">
+          <p className="text-sm font-semibold text-purple-900 dark:text-purple-300 mb-1">
             Want to quiz yourself on this?
           </p>
-          <p className="text-sm text-purple-700 mb-3">
+          <p className="text-sm text-purple-700 dark:text-purple-400 mb-3">
             Test your knowledge of &quot;{todaysTerm.term}&quot; and track your mastery with Pro.
           </p>
           <Link
@@ -372,10 +372,10 @@ export default async function DashboardPage() {
 
       {/* Resume learning */}
       {lastTerm && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 mb-5">
-          <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-2">Resume Learning</p>
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-5 mb-5">
+          <p className="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide font-medium mb-2">Resume Learning</p>
           <div className="flex items-center justify-between">
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-gray-700 dark:text-slate-300">
               Continue where you left off: <span className="font-semibold">{lastTerm.term}</span>
             </p>
             {isPro ? (
@@ -396,11 +396,11 @@ export default async function DashboardPage() {
 
       {/* Upgrade banner (after 3 days, free users only) */}
       {showUpgradeBanner && (
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100 mb-5">
-          <h3 className="text-base font-semibold text-gray-900 mb-1">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-6 border border-blue-100 dark:border-blue-800/30 mb-5">
+          <h3 className="text-base font-semibold text-gray-900 dark:text-slate-100 mb-1">
             You&apos;ve learned {masteredCount > 0 ? masteredCount : 'a few'} terms already!
           </h3>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-gray-600 dark:text-slate-300 text-sm mb-4">
             Pro unlocks 365 terms + quiz + flashcards. Go beyond one term a day.
           </p>
           <Link
@@ -418,38 +418,38 @@ export default async function DashboardPage() {
           <div className="grid grid-cols-3 gap-4 mb-4">
             <Link
               href="/dashboard/glossary"
-              className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-sm transition-shadow"
+              className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-5 hover:shadow-sm transition-shadow"
             >
               <div className="text-2xl mb-2">📚</div>
-              <div className="font-semibold text-gray-900 text-sm">Glossary</div>
-              <div className="text-xs text-gray-600 mt-0.5">Browse all terms</div>
+              <div className="font-semibold text-gray-900 dark:text-slate-100 text-sm">Glossary</div>
+              <div className="text-xs text-gray-600 dark:text-slate-400 mt-0.5">Browse all terms</div>
             </Link>
             <Link
               href="/dashboard/flashcards"
-              className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-sm transition-shadow"
+              className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-5 hover:shadow-sm transition-shadow"
             >
               <div className="text-2xl mb-2">🃏</div>
-              <div className="font-semibold text-gray-900 text-sm">Flashcards</div>
-              <div className="text-xs text-gray-600 mt-0.5">Practice &amp; review</div>
+              <div className="font-semibold text-gray-900 dark:text-slate-100 text-sm">Flashcards</div>
+              <div className="text-xs text-gray-600 dark:text-slate-400 mt-0.5">Practice &amp; review</div>
             </Link>
             <Link
               href="/dashboard/quiz"
-              className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-sm transition-shadow"
+              className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-5 hover:shadow-sm transition-shadow"
             >
               <div className="text-2xl mb-2">🧠</div>
-              <div className="font-semibold text-gray-900 text-sm">Quiz Mode</div>
-              <div className="text-xs text-gray-600 mt-0.5">Test knowledge</div>
+              <div className="font-semibold text-gray-900 dark:text-slate-100 text-sm">Quiz Mode</div>
+              <div className="text-xs text-gray-600 dark:text-slate-400 mt-0.5">Test knowledge</div>
             </Link>
           </div>
 
           {/* Quiz stats + Progress link */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5 mb-4">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-5 mb-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-900">Quiz Progress</p>
-                <p className="text-sm text-gray-500 mt-0.5">
-                  <span className="font-semibold text-gray-900">{masteredQuizCount}</span> mastered out of{' '}
-                  <span className="font-semibold text-gray-900">{quizzableCount}</span> quizzable terms
+                <p className="text-sm font-medium text-gray-900 dark:text-slate-100">Quiz Progress</p>
+                <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">
+                  <span className="font-semibold text-gray-900 dark:text-slate-100">{masteredQuizCount}</span> mastered out of{' '}
+                  <span className="font-semibold text-gray-900 dark:text-slate-100">{quizzableCount}</span> quizzable terms
                 </p>
               </div>
               <Link

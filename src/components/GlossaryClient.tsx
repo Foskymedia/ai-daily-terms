@@ -15,9 +15,9 @@ interface GlossaryClientProps {
 }
 
 const difficultyColors = {
-  beginner: 'bg-green-100 text-green-700',
-  intermediate: 'bg-yellow-100 text-yellow-700',
-  advanced: 'bg-red-100 text-red-700',
+  beginner: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+  intermediate: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
+  advanced: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
 }
 
 function ProgressRing({ pct, size = 52 }: { pct: number; size?: number }) {
@@ -71,12 +71,12 @@ function FlashcardModal({ term, onClose }: FlashcardModalProps) {
             style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : '', minHeight: '220px' }}
           >
             <div
-              className="absolute inset-0 bg-white rounded-2xl p-8 flex flex-col items-center justify-center text-center"
+              className="absolute inset-0 bg-white dark:bg-slate-800 rounded-2xl p-8 flex flex-col items-center justify-center text-center"
               style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
             >
-              <p className="text-xs text-gray-400 uppercase tracking-wide mb-3">Term</p>
-              <h3 className="text-xl font-bold text-gray-900">{term.term}</h3>
-              <p className="text-sm text-gray-400 mt-4">Tap to flip</p>
+              <p className="text-xs text-gray-400 dark:text-slate-500 uppercase tracking-wide mb-3">Term</p>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-slate-100">{term.term}</h3>
+              <p className="text-sm text-gray-400 dark:text-slate-500 mt-4">Tap to flip</p>
             </div>
             <div
               className="absolute inset-0 bg-blue-600 rounded-2xl p-8 flex flex-col items-center justify-center text-center overflow-y-auto"
@@ -159,16 +159,16 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
       {/* Header + progress */}
       <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">AI Glossary</h1>
-          <p className="text-gray-500 mt-1 text-sm">{totalPublished} terms · General</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100">AI Glossary</h1>
+          <p className="text-gray-500 dark:text-slate-400 mt-1 text-sm">{totalPublished} terms · General</p>
         </div>
         <div className="flex items-center gap-3">
           <ProgressRing pct={pct} />
           <div>
-            <p className="text-sm font-semibold text-gray-900">
+            <p className="text-sm font-semibold text-gray-900 dark:text-slate-100">
               {seenCount} / {totalPublished} explored
             </p>
-            <p className="text-xs text-gray-500">{totalPublished - seenCount} terms remaining</p>
+            <p className="text-xs text-gray-500 dark:text-slate-400">{totalPublished - seenCount} terms remaining</p>
           </div>
         </div>
       </div>
@@ -180,7 +180,7 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search terms and definitions..."
-          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full border border-gray-200 dark:border-white/[0.12] rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-slate-100"
         />
       </div>
 
@@ -189,7 +189,7 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
         <select
           value={filterCategory ?? ''}
           onChange={(e) => setFilterCategory(e.target.value || null)}
-          className="text-sm border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+          className="text-sm border border-gray-200 dark:border-white/[0.12] rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 dark:text-slate-100"
         >
           <option value="">All categories</option>
           {categories.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -198,7 +198,7 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
         <select
           value={filterDifficulty ?? ''}
           onChange={(e) => setFilterDifficulty(e.target.value || null)}
-          className="text-sm border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+          className="text-sm border border-gray-200 dark:border-white/[0.12] rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 dark:text-slate-100"
         >
           <option value="">All levels</option>
           <option value="beginner">Beginner</option>
@@ -209,7 +209,7 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
         <button
           onClick={() => { setSavedOnly((v) => !v); setMasteredOnly(false) }}
           className={`text-sm px-3 py-2 rounded-xl border font-medium transition-colors ${
-            savedOnly ? 'bg-blue-600 text-white border-blue-600' : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+            savedOnly ? 'bg-blue-600 text-white border-blue-600' : 'border-gray-200 dark:border-white/[0.08] text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700/50'
           }`}
         >
           Saved only
@@ -218,7 +218,7 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
         <button
           onClick={() => { setMasteredOnly((v) => !v); setSavedOnly(false) }}
           className={`text-sm px-3 py-2 rounded-xl border font-medium transition-colors ${
-            masteredOnly ? 'bg-green-600 text-white border-green-600' : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+            masteredOnly ? 'bg-green-600 text-white border-green-600' : 'border-gray-200 dark:border-white/[0.08] text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700/50'
           }`}
         >
           Mastered only
@@ -227,7 +227,7 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
         {(search || filterCategory || filterDifficulty || savedOnly || masteredOnly) && (
           <button
             onClick={() => { setSearch(''); setFilterCategory(null); setFilterDifficulty(null); setSavedOnly(false); setMasteredOnly(false) }}
-            className="text-sm px-3 py-2 rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 transition-colors flex items-center gap-1"
+            className="text-sm px-3 py-2 rounded-xl border border-gray-200 dark:border-white/[0.08] text-gray-500 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors flex items-center gap-1"
           >
             <X size={13} /> Clear
           </button>
@@ -235,7 +235,7 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
       </div>
 
       {/* Term count */}
-      <p className="text-sm text-gray-500 mb-6">
+      <p className="text-sm text-gray-500 dark:text-slate-400 mb-6">
         {filtered.length === terms.length
           ? `Showing all ${terms.length} terms`
           : `${filtered.length} of ${terms.length} terms`}
@@ -243,12 +243,12 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
 
       {/* Term list */}
       {letters.length === 0 ? (
-        <div className="text-center text-gray-500 py-16">No terms match your filters.</div>
+        <div className="text-center text-gray-500 dark:text-slate-400 py-16">No terms match your filters.</div>
       ) : (
         <div className="space-y-10">
           {letters.map((letter) => (
             <div key={letter}>
-              <h2 className="text-xl font-bold text-gray-400 mb-4 border-b border-gray-100 pb-2">{letter}</h2>
+              <h2 className="text-xl font-bold text-gray-400 dark:text-slate-500 mb-4 border-b border-gray-100 dark:border-white/[0.08] pb-2">{letter}</h2>
               <div className="space-y-3">
                 {grouped[letter].map((term) => {
                   const status = localProgress[term.id]
@@ -258,18 +258,18 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
                   return (
                     <div
                       key={term.id}
-                      className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-sm transition-shadow"
+                      className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-5 hover:shadow-sm transition-shadow"
                     >
                       <div className="flex items-start justify-between gap-3 mb-2">
                         <div className="flex items-center gap-2 flex-wrap flex-1 min-w-0">
-                          <h3 className="text-base font-semibold text-gray-900">{term.term}</h3>
+                          <h3 className="text-base font-semibold text-gray-900 dark:text-slate-100">{term.term}</h3>
                           {term.difficulty && (
                             <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${difficultyColors[term.difficulty]}`}>
                               {term.difficulty}
                             </span>
                           )}
                           {isMastered && (
-                            <span className="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full font-medium">
+                            <span className="text-xs bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded-full font-medium">
                               Mastered ✓
                             </span>
                           )}
@@ -280,7 +280,7 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
                           <button
                             onClick={() => setFlashcardTerm(term)}
                             title="Flashcard"
-                            className="p-1.5 rounded-lg text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors text-sm"
+                            className="p-1.5 rounded-lg text-gray-400 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors text-sm"
                           >
                             🃏
                           </button>
@@ -289,8 +289,8 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
                             title={isSaved ? 'Unsave' : 'Save'}
                             className={`p-1.5 rounded-lg transition-colors ${
                               isSaved
-                                ? 'text-blue-600 hover:bg-blue-50'
-                                : 'text-gray-400 hover:text-blue-600 hover:bg-blue-50'
+                                ? 'text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30'
+                                : 'text-gray-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30'
                             }`}
                           >
                             {isSaved ? <BookmarkCheck size={16} /> : <Bookmark size={16} />}
@@ -298,11 +298,11 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
                         </div>
                       </div>
 
-                      <p className="text-gray-700 text-[15px] leading-relaxed">
+                      <p className="text-gray-700 dark:text-slate-200 text-[15px] leading-relaxed">
                         {term.plain_explanation ?? term.definition}
                       </p>
                       {term.example_sentence && (
-                        <p className="text-sm text-gray-500 italic mt-2 border-l-2 border-gray-200 pl-3">
+                        <p className="text-sm text-gray-500 dark:text-slate-400 italic mt-2 border-l-2 border-gray-200 dark:border-white/[0.08] pl-3">
                           &ldquo;{term.example_sentence}&rdquo;
                         </p>
                       )}
@@ -317,11 +317,11 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
 
       {/* Continue learning prompt */}
       {pct < 100 && (
-        <div className="mt-12 text-center bg-blue-50 rounded-2xl p-8 border border-blue-100">
-          <p className="text-gray-700 font-semibold mb-1">
+        <div className="mt-12 text-center bg-blue-50 dark:bg-blue-900/30 rounded-2xl p-8 border border-blue-100 dark:border-white/[0.08]">
+          <p className="text-gray-700 dark:text-slate-200 font-semibold mb-1">
             You&apos;ve explored {seenCount} of {totalPublished} terms.
           </p>
-          <p className="text-gray-500 text-sm">Keep going!</p>
+          <p className="text-gray-500 dark:text-slate-400 text-sm">Keep going!</p>
         </div>
       )}
 

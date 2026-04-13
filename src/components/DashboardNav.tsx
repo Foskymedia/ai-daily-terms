@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import UpgradeModal from './UpgradeModal'
+import ThemeToggle from './ThemeToggle'
 
 interface DashboardNavProps {
   isPro: boolean
@@ -39,9 +40,9 @@ export default function DashboardNav({ isPro }: DashboardNavProps) {
   return (
     <>
       {/* Desktop nav */}
-      <nav className="hidden md:block bg-white border-b border-gray-100">
+      <nav className="hidden md:block bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-white/[0.08]">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/dashboard" className="text-xl font-bold text-gray-900">
+          <Link href="/dashboard" className="text-xl font-bold text-gray-900 dark:text-slate-100">
             AI Daily Terms
           </Link>
           <div className="flex items-center gap-1">
@@ -52,20 +53,21 @@ export default function DashboardNav({ isPro }: DashboardNavProps) {
                 onClick={pro ? (e) => handleProLink(e, label) : undefined}
                 className={`text-sm px-3 py-2 rounded-lg transition-colors ${
                   !pro || isPro
-                    ? 'text-gray-600 hover:bg-gray-50'
-                    : 'text-gray-400 hover:bg-gray-50'
+                    ? 'text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800'
+                    : 'text-gray-400 dark:text-slate-500 hover:bg-gray-50 dark:hover:bg-slate-800'
                 }`}
               >
                 {label}
                 {pro && !isPro && (
-                  <span className="text-xs bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded ml-1">
+                  <span className="text-xs bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded ml-1">
                     Pro
                   </span>
                 )}
               </Link>
             ))}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
             {!isPro && (
               <Link
                 href="/pricing"
@@ -75,13 +77,13 @@ export default function DashboardNav({ isPro }: DashboardNavProps) {
               </Link>
             )}
             {isPro && (
-              <span className="text-xs bg-blue-100 text-blue-700 font-semibold px-2 py-1 rounded-full">
+              <span className="text-xs bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-semibold px-2 py-1 rounded-full">
                 PRO
               </span>
             )}
             <button
               onClick={handleSignOut}
-              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+              className="text-sm text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 transition-colors"
             >
               Sign out
             </button>
@@ -90,13 +92,13 @@ export default function DashboardNav({ isPro }: DashboardNavProps) {
       </nav>
 
       {/* Mobile header */}
-      <nav className="md:hidden bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
-        <Link href="/dashboard" className="text-lg font-bold text-gray-900">
+      <nav className="md:hidden bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-white/[0.08] px-4 py-3 flex items-center justify-between">
+        <Link href="/dashboard" className="text-lg font-bold text-gray-900 dark:text-slate-100">
           AI Daily Terms
         </Link>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {isPro && (
-            <span className="text-xs bg-blue-100 text-blue-700 font-semibold px-2 py-1 rounded-full">
+            <span className="text-xs bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-semibold px-2 py-1 rounded-full">
               PRO
             </span>
           )}
@@ -108,7 +110,8 @@ export default function DashboardNav({ isPro }: DashboardNavProps) {
               Upgrade
             </Link>
           )}
-          <button onClick={handleSignOut} className="text-sm text-gray-500">
+          <ThemeToggle />
+          <button onClick={handleSignOut} className="text-sm text-gray-500 dark:text-slate-400">
             Sign out
           </button>
         </div>

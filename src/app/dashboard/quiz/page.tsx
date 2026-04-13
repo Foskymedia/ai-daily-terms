@@ -224,7 +224,7 @@ export default function QuizPage() {
   // ── Loading ──────────────────────────────────────────────────────
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-64 text-gray-500">
+      <div className="flex items-center justify-center min-h-64 text-gray-500 dark:text-slate-400">
         Loading quiz...
       </div>
     )
@@ -235,8 +235,8 @@ export default function QuizPage() {
     return (
       <div className="max-w-2xl mx-auto text-center py-16">
         <div className="text-5xl mb-4">🔒</div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-3">Quiz Mode is a Pro feature</h1>
-        <p className="text-gray-600 mb-8">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-100 mb-3">Quiz Mode is a Pro feature</h1>
+        <p className="text-gray-600 dark:text-slate-300 mb-8">
           Upgrade to Pro to test your knowledge and track mastery across all AI terms.
         </p>
         <Link href="/pricing" className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors">
@@ -248,7 +248,7 @@ export default function QuizPage() {
 
   if (terms.length === 0) {
     return (
-      <div className="text-center text-gray-400 py-16">No quiz questions available yet.</div>
+      <div className="text-center text-gray-400 dark:text-slate-500 py-16">No quiz questions available yet.</div>
     )
   }
 
@@ -261,35 +261,35 @@ export default function QuizPage() {
     return (
       <div className="max-w-2xl mx-auto text-center py-8">
         <div className="text-5xl mb-4">🎉</div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
-        <p className="text-gray-600 mb-6">You answered all {total} questions.</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100 mb-2">Quiz Complete!</h1>
+        <p className="text-gray-600 dark:text-slate-300 mb-6">You answered all {total} questions.</p>
 
-        <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm mb-6">
-          <div className="text-6xl font-bold text-blue-600 mb-1">{pct}%</div>
-          <p className="text-gray-500 mb-6">Final score</p>
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-8 shadow-sm mb-6">
+          <div className="text-6xl font-bold text-blue-600 dark:text-blue-400 mb-1">{pct}%</div>
+          <p className="text-gray-500 dark:text-slate-400 mb-6">Final score</p>
           <div className="flex justify-center gap-16">
             <div>
               <div className="text-4xl font-bold text-green-600">{correctCount}</div>
-              <div className="text-sm text-gray-600 mt-1">Correct</div>
+              <div className="text-sm text-gray-600 dark:text-slate-300 mt-1">Correct</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-red-500">{incorrectCount}</div>
-              <div className="text-sm text-gray-600 mt-1">Incorrect</div>
+              <div className="text-sm text-gray-600 dark:text-slate-300 mt-1">Incorrect</div>
             </div>
           </div>
         </div>
 
         {/* Weak areas */}
         {weakCategories.length > 0 && (
-          <div className="bg-amber-50 border border-amber-100 rounded-2xl p-5 mb-6 text-left">
-            <p className="text-sm font-semibold text-amber-800 mb-3">
+          <div className="bg-amber-50 dark:bg-amber-900/30 border border-amber-100 rounded-2xl p-5 mb-6 text-left">
+            <p className="text-sm font-semibold text-amber-800 dark:text-amber-300 mb-3">
               You struggled with:
             </p>
             <div className="flex flex-wrap gap-2 mb-4">
               {weakCategories.map((cat) => (
                 <span
                   key={cat}
-                  className="text-xs bg-amber-100 text-amber-700 px-3 py-1 rounded-full font-medium"
+                  className="text-xs bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-3 py-1 rounded-full font-medium"
                 >
                   {cat}
                 </span>
@@ -297,7 +297,7 @@ export default function QuizPage() {
             </div>
             <button
               onClick={reviewWeakAreas}
-              className="text-sm text-amber-700 font-semibold hover:text-amber-900 transition-colors"
+              className="text-sm text-amber-700 dark:text-amber-400 font-semibold hover:text-amber-900 transition-colors"
             >
               Review Weak Areas →
             </button>
@@ -305,9 +305,9 @@ export default function QuizPage() {
         )}
 
         {/* Done for today banner — quiz is the final step */}
-        <div className="bg-green-50 border border-green-100 rounded-2xl p-5 mb-6">
-          <p className="text-sm font-semibold text-green-800 mb-0.5">You&apos;re done for today!</p>
-          <p className="text-sm text-green-700">
+        <div className="bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800/30 rounded-2xl p-5 mb-6">
+          <p className="text-sm font-semibold text-green-800 dark:text-green-300 mb-0.5">You&apos;re done for today!</p>
+          <p className="text-sm text-green-700 dark:text-green-400">
             Read → Flashcards → Quiz. Come back tomorrow to keep your streak alive.
           </p>
         </div>
@@ -321,13 +321,13 @@ export default function QuizPage() {
           </button>
           <Link
             href="/dashboard/progress"
-            className="px-6 py-3 rounded-xl border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
+            className="px-6 py-3 rounded-xl border border-gray-200 dark:border-white/[0.08] text-gray-700 dark:text-slate-200 font-semibold hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
           >
             View Progress →
           </Link>
           <Link
             href="/dashboard"
-            className="px-6 py-3 rounded-xl border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
+            className="px-6 py-3 rounded-xl border border-gray-200 dark:border-white/[0.08] text-gray-700 dark:text-slate-200 font-semibold hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
           >
             Dashboard
           </Link>
@@ -368,13 +368,13 @@ export default function QuizPage() {
       {/* Header */}
       <div className="mb-2 flex items-center justify-between flex-wrap gap-2">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Quiz</h1>
-          <p className="text-xs text-gray-500 mt-0.5">{getDifficultyLabel(masteredCount)}</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-100">Quiz</h1>
+          <p className="text-xs text-gray-500 dark:text-slate-400 mt-0.5">{getDifficultyLabel(masteredCount)}</p>
         </div>
         <div className="flex items-center gap-3 text-sm">
-          <span className="font-semibold text-green-600">{correctCount} correct</span>
-          <span className="text-gray-300">|</span>
-          <span className="text-gray-600">{correctCount + incorrectCount} answered</span>
+          <span className="font-semibold text-green-600 dark:text-green-400">{correctCount} correct</span>
+          <span className="text-gray-300 dark:text-slate-700">|</span>
+          <span className="text-gray-600 dark:text-slate-300">{correctCount + incorrectCount} answered</span>
         </div>
       </div>
 
@@ -384,22 +384,22 @@ export default function QuizPage() {
       )}
 
       {/* Progress bar */}
-      <div className="w-full bg-gray-100 rounded-full h-1.5 mb-6">
+      <div className="w-full bg-gray-100 dark:bg-slate-700 rounded-full h-1.5 mb-6">
         <div
           className="bg-blue-500 h-1.5 rounded-full transition-all duration-300"
           style={{ width: `${progress}%` }}
         />
       </div>
-      <p className="text-xs text-gray-500 text-right mb-6 -mt-4">
+      <p className="text-xs text-gray-500 dark:text-slate-400 text-right mb-6 -mt-4">
         {currentIndex + 1} / {total}
       </p>
 
       {/* Question card */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm mb-6">
-        <p className="text-xs text-blue-600 font-semibold uppercase tracking-wider mb-2">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-8 shadow-sm mb-6">
+        <p className="text-xs text-blue-600 dark:text-blue-400 font-semibold uppercase tracking-wider mb-2">
           {current.term}
         </p>
-        <h2 className="text-[18px] md:text-xl font-bold text-gray-900 mb-8 leading-snug">
+        <h2 className="text-[18px] md:text-xl font-bold text-gray-900 dark:text-slate-100 mb-8 leading-snug">
           {current.quiz_question}
         </h2>
 
@@ -412,13 +412,13 @@ export default function QuizPage() {
               'w-full text-left px-5 py-4 rounded-xl border-2 font-medium text-base transition-all min-h-[52px] '
 
             if (!answered) {
-              cls += 'border-gray-200 text-gray-800 hover:border-blue-400 hover:bg-blue-50 cursor-pointer'
+              cls += 'border-gray-200 dark:border-white/[0.12] text-gray-800 dark:text-slate-100 hover:border-blue-400 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 cursor-pointer'
             } else if (isCorrectOpt) {
-              cls += 'border-green-500 bg-green-50 text-green-800'
+              cls += 'border-green-500 bg-green-50 dark:bg-green-900/30 text-green-800 dark:text-green-300'
             } else if (isWrongSelected) {
-              cls += 'border-red-400 bg-red-50 text-red-700'
+              cls += 'border-red-400 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400'
             } else {
-              cls += 'border-gray-100 text-gray-500 cursor-default'
+              cls += 'border-gray-100 dark:border-white/[0.05] text-gray-500 dark:text-slate-500 cursor-default'
             }
 
             return (
@@ -428,7 +428,7 @@ export default function QuizPage() {
                 disabled={answered}
                 className={cls}
               >
-                <span className="inline-block w-6 font-bold text-gray-500 mr-2">{opt.key}.</span>
+                <span className="inline-block w-6 font-bold text-gray-500 dark:text-slate-400 mr-2">{opt.key}.</span>
                 {opt.text}
               </button>
             )
@@ -441,22 +441,22 @@ export default function QuizPage() {
         <div className="space-y-4">
           <div
             className={`rounded-xl p-5 border-l-4 ${
-              answerState!.isCorrect ? 'bg-green-50 border-green-500' : 'bg-amber-50 border-amber-400'
+              answerState!.isCorrect ? 'bg-green-50 dark:bg-green-900/30 border-green-500' : 'bg-amber-50 dark:bg-amber-900/30 border-amber-400'
             }`}
           >
-            <p className="text-sm font-semibold text-gray-900 mb-1">
+            <p className="text-sm font-semibold text-gray-900 dark:text-slate-100 mb-1">
               {answerState!.isCorrect
                 ? "✓ Correct! You're getting strong in this topic."
                 : "✗ Not quite — let's reinforce this concept."}
             </p>
             {current.quiz_explanation && (
-              <p className="text-sm text-gray-700 mt-1">{current.quiz_explanation}</p>
+              <p className="text-sm text-gray-700 dark:text-slate-200 mt-1">{current.quiz_explanation}</p>
             )}
           </div>
 
           {/* Confidence rating */}
-          <div className="bg-white rounded-xl border border-gray-100 p-5">
-            <p className="text-sm font-medium text-gray-700 mb-3">How confident were you?</p>
+          <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-white/[0.08] p-5">
+            <p className="text-sm font-medium text-gray-700 dark:text-slate-200 mb-3">How confident were you?</p>
             <div className="flex items-center gap-3">
               {[
                 { value: 1, label: 'Guessing', color: 'text-red-400 hover:text-red-600' },
@@ -477,7 +477,7 @@ export default function QuizPage() {
               {confidence !== null && (
                 <button
                   onClick={() => setConfidence(null)}
-                  className="text-xs text-gray-400 hover:text-gray-600 ml-2"
+                  className="text-xs text-gray-400 dark:text-slate-500 hover:text-gray-600 ml-2"
                 >
                   Clear
                 </button>

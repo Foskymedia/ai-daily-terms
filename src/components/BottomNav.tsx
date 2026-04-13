@@ -19,7 +19,7 @@ export default function BottomNav({ isPro }: { isPro: boolean }) {
 
   return (
     <>
-      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-100 md:hidden safe-area-bottom">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-white/[0.08] md:hidden safe-area-bottom">
         <div className="grid grid-cols-4">
           {tabs.map(({ label, href, icon: Icon, pro }) => {
             const isActive = pathname === href
@@ -30,11 +30,11 @@ export default function BottomNav({ isPro }: { isPro: boolean }) {
                 <button
                   key={href}
                   onClick={() => setLockedFeature(label)}
-                  className="flex flex-col items-center justify-center py-2.5 gap-1 relative text-gray-300 active:bg-gray-50 transition-colors"
+                  className="flex flex-col items-center justify-center py-2.5 gap-1 relative text-gray-400 dark:text-slate-600 active:bg-gray-50 dark:active:bg-slate-800 transition-colors"
                 >
                   <div className="relative">
                     <Icon size={22} strokeWidth={1.8} />
-                    <Lock size={10} strokeWidth={2.5} className="absolute -top-1 -right-1.5 text-gray-400" />
+                    <Lock size={10} strokeWidth={2.5} className="absolute -top-1 -right-1.5 text-gray-400 dark:text-slate-500" />
                   </div>
                   <span className="text-xs font-medium">{label}</span>
                 </button>
@@ -45,12 +45,14 @@ export default function BottomNav({ isPro }: { isPro: boolean }) {
               <Link
                 key={href}
                 href={href}
-                className={`flex flex-col items-center justify-center py-2.5 gap-1 relative transition-colors active:bg-gray-50 ${
-                  isActive ? 'text-blue-600' : 'text-gray-500'
+                className={`flex flex-col items-center justify-center py-2.5 gap-1 relative transition-colors active:bg-gray-50 dark:active:bg-slate-800 ${
+                  isActive
+                    ? 'text-blue-600 dark:text-blue-400'
+                    : 'text-gray-500 dark:text-slate-400'
                 }`}
               >
                 {isActive && (
-                  <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-blue-600 rounded-full" />
+                  <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-blue-600 dark:bg-blue-400 rounded-full" />
                 )}
                 <Icon size={22} strokeWidth={isActive ? 2.5 : 1.8} />
                 <span className="text-xs font-medium">{label}</span>

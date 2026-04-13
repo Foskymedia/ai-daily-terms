@@ -88,72 +88,72 @@ export default async function ProgressPage() {
   return (
     <div className="max-w-3xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Your Progress</h1>
-        <p className="text-gray-500 mt-1">Your AI learning journey so far</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100">Your Progress</h1>
+        <p className="text-gray-500 dark:text-slate-400 mt-1">Your AI learning journey so far</p>
       </div>
 
       {/* Stats grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-4">
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 text-center">
-          <p className="text-3xl font-bold text-gray-900">{seenCount}</p>
-          <p className="text-xs text-gray-500 mt-1 uppercase tracking-wide">Terms Seen</p>
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-5 text-center">
+          <p className="text-3xl font-bold text-gray-900 dark:text-slate-100">{seenCount}</p>
+          <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 uppercase tracking-wide">Terms Seen</p>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 text-center">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-5 text-center">
           <p className="text-3xl font-bold text-green-600">{masteredCount}</p>
-          <p className="text-xs text-gray-500 mt-1 uppercase tracking-wide">Mastered</p>
+          <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 uppercase tracking-wide">Mastered</p>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 text-center">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-5 text-center">
           <p className="text-3xl font-bold text-orange-500">🔥 {currentStreak}</p>
-          <p className="text-xs text-gray-500 mt-1 uppercase tracking-wide">Day Streak</p>
+          <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 uppercase tracking-wide">Day Streak</p>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-4 mb-8">
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 text-center">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-5 text-center">
           <p className="text-3xl font-bold text-blue-600">{longestStreak}</p>
-          <p className="text-xs text-gray-500 mt-1 uppercase tracking-wide">Best Streak</p>
+          <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 uppercase tracking-wide">Best Streak</p>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 text-center">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-5 text-center">
           <p className="text-3xl font-bold text-indigo-600">{totalXP}</p>
-          <p className="text-xs text-gray-500 mt-1 uppercase tracking-wide">Total XP</p>
+          <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 uppercase tracking-wide">Total XP</p>
         </div>
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 text-center">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-5 text-center">
           {quizAccuracyPct !== null ? (
             <>
               <p className="text-3xl font-bold text-purple-600">{quizAccuracyPct}%</p>
-              <p className="text-xs text-gray-500 mt-1 uppercase tracking-wide">Quiz Accuracy</p>
-              <p className="text-xs text-gray-500 mt-0.5">{totalAttempts} attempts</p>
+              <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 uppercase tracking-wide">Quiz Accuracy</p>
+              <p className="text-xs text-gray-500 dark:text-slate-400 mt-0.5">{totalAttempts} attempts</p>
             </>
           ) : (
             <>
-              <p className="text-3xl font-bold text-gray-400">—</p>
-              <p className="text-xs text-gray-500 mt-1 uppercase tracking-wide">Quiz Accuracy</p>
-              <p className="text-xs text-gray-500 mt-0.5">No attempts yet</p>
+              <p className="text-3xl font-bold text-gray-400 dark:text-slate-600">—</p>
+              <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 uppercase tracking-wide">Quiz Accuracy</p>
+              <p className="text-xs text-gray-500 dark:text-slate-400 mt-0.5">No attempts yet</p>
             </>
           )}
         </div>
       </div>
 
       {/* XP Level progress */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-6 mb-6">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-6 mb-6">
         <div className="flex items-center justify-between mb-3">
           <div>
-            <p className="font-bold text-gray-900">
+            <p className="font-bold text-gray-900 dark:text-slate-100">
               Level {xpLevelInfo.level} — {xpLevelInfo.name}
             </p>
-            <p className="text-sm text-gray-500 mt-0.5">
+            <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">
               {totalXP} XP total
               {xpNeeded !== null && ` · ${xpNeeded} XP to next level`}
             </p>
           </div>
           <span className="text-3xl">⭐</span>
         </div>
-        <div className="w-full bg-gray-100 rounded-full h-3">
+        <div className="w-full bg-gray-100 dark:bg-slate-700 rounded-full h-3">
           <div
             className="bg-blue-600 h-3 rounded-full transition-all duration-700"
             style={{ width: `${xpPct}%` }}
           />
         </div>
-        <div className="flex justify-between mt-2 text-xs text-gray-500">
+        <div className="flex justify-between mt-2 text-xs text-gray-500 dark:text-slate-400">
           <span>{xpInLevel} XP in this level</span>
           {xpNeeded !== null ? (
             <span>{xpNeeded} XP to Level {xpLevelInfo.level + 1}</span>
@@ -163,7 +163,7 @@ export default async function ProgressPage() {
         </div>
 
         {/* XP breakdown hint */}
-        <div className="mt-4 pt-4 border-t border-gray-50 grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="mt-4 pt-4 border-t border-gray-50 dark:border-white/[0.05] grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
             { label: 'Read term', xp: '+5 XP' },
             { label: 'Flashcards', xp: '+10 XP' },
@@ -171,18 +171,18 @@ export default async function ProgressPage() {
             { label: 'Day complete', xp: '+15 XP' },
           ].map(({ label, xp }) => (
             <div key={label} className="text-center">
-              <p className="text-xs font-semibold text-blue-600">{xp}</p>
-              <p className="text-xs text-gray-500 mt-0.5">{label}</p>
+              <p className="text-xs font-semibold text-blue-600 dark:text-blue-400">{xp}</p>
+              <p className="text-xs text-gray-500 dark:text-slate-400 mt-0.5">{label}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* Category heatmap */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-6 mb-6">
-        <h2 className="font-bold text-gray-900 mb-4">Category Breakdown</h2>
+      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-6 mb-6">
+        <h2 className="font-bold text-gray-900 dark:text-slate-100 mb-4">Category Breakdown</h2>
         {categoryStats.length === 0 ? (
-          <p className="text-gray-400 text-sm">Start learning to see your category progress.</p>
+          <p className="text-gray-400 dark:text-slate-500 text-sm">Start learning to see your category progress.</p>
         ) : (
           <div className="space-y-3">
             {categoryStats.map((cat) => {
@@ -192,16 +192,16 @@ export default async function ProgressPage() {
               return (
                 <div key={cat.category}>
                   <div className="flex items-center justify-between mb-1">
-                    <span className={`text-sm font-medium ${isWeak ? 'text-amber-700' : 'text-gray-700'}`}>
+                    <span className={`text-sm font-medium ${isWeak ? 'text-amber-700 dark:text-amber-400' : 'text-gray-700 dark:text-slate-200'}`}>
                       {cat.category} {isWeak && '⚠️'}
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-500 dark:text-slate-400">
                       {cat.mastered}/{cat.total} mastered
                     </span>
                   </div>
-                  <div className="w-full bg-gray-100 rounded-full h-2 relative overflow-hidden">
+                  <div className="w-full bg-gray-100 dark:bg-slate-700 rounded-full h-2 relative overflow-hidden">
                     <div
-                      className="absolute inset-y-0 left-0 bg-blue-100 rounded-full"
+                      className="absolute inset-y-0 left-0 bg-blue-100 dark:bg-blue-800/50 rounded-full"
                       style={{ width: `${seenPct}%` }}
                     />
                     <div
@@ -212,9 +212,9 @@ export default async function ProgressPage() {
                 </div>
               )
             })}
-            <div className="flex items-center gap-4 mt-3 text-xs text-gray-500">
+            <div className="flex items-center gap-4 mt-3 text-xs text-gray-500 dark:text-slate-400">
               <span className="flex items-center gap-1.5">
-                <span className="w-3 h-2 rounded bg-blue-100 inline-block" /> Seen
+                <span className="w-3 h-2 rounded bg-blue-100 dark:bg-blue-900/30 inline-block" /> Seen
               </span>
               <span className="flex items-center gap-1.5">
                 <span className="w-3 h-2 rounded bg-green-500 inline-block" /> Mastered
@@ -225,24 +225,24 @@ export default async function ProgressPage() {
       </div>
 
       {/* Recent milestones */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-6 mb-6">
-        <h2 className="font-bold text-gray-900 mb-4">Milestones</h2>
+      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-white/[0.08] p-6 mb-6">
+        <h2 className="font-bold text-gray-900 dark:text-slate-100 mb-4">Milestones</h2>
         {milestones.length === 0 ? (
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-500 dark:text-slate-400 text-sm">
             Keep learning to earn your first milestone! Start by reading today&apos;s term.
           </p>
         ) : (
           <div className="space-y-3">
             {milestones.map((m) => (
               <div key={m.id} className="flex items-center gap-3">
-                <span className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-sm flex-shrink-0">
+                <span className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-sm flex-shrink-0">
                   🏆
                 </span>
                 <div>
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-gray-900 dark:text-slate-100">
                     {MILESTONE_LABELS[m.milestone_type] ?? m.milestone_type}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500 dark:text-slate-400">
                     {new Date(m.achieved_at).toLocaleDateString('en-US', {
                       month: 'short', day: 'numeric', year: 'numeric',
                     })}
@@ -255,9 +255,9 @@ export default async function ProgressPage() {
       </div>
 
       {/* Summary + CTA */}
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-100 p-6 text-center">
-        <p className="text-gray-700 font-semibold mb-1">Your AI journey so far</p>
-        <p className="text-gray-500 text-sm mb-4">
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl border border-blue-100 dark:border-blue-800/30 p-6 text-center">
+        <p className="text-gray-700 dark:text-slate-200 font-semibold mb-1">Your AI journey so far</p>
+        <p className="text-gray-500 dark:text-slate-300 text-sm mb-4">
           You&apos;ve explored {seenCount} of {totalPublished} terms and mastered {masteredCount}.
           {currentStreak > 0 && ` You're on a ${currentStreak}-day streak.`}
           {' '}Keep going!

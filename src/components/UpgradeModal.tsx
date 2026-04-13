@@ -51,30 +51,30 @@ export default function UpgradeModal({ feature, onClose }: UpgradeModalProps) {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl w-full max-w-sm p-8 relative"
+        className="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-sm p-8 relative border border-gray-100 dark:border-white/[0.08]"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+          className="absolute top-4 right-4 text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300 transition-colors"
         >
           <X size={20} />
         </button>
 
         <div className="text-4xl mb-4">🔒</div>
-        <h2 className="text-xl font-bold text-gray-900 mb-2">{details.title}</h2>
-        <p className="text-sm text-gray-500 mb-6">This feature is available on the Pro plan.</p>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-slate-100 mb-2">{details.title}</h2>
+        <p className="text-sm text-gray-500 dark:text-slate-400 mb-6">This feature is available on the Pro plan.</p>
 
         <ul className="space-y-3 mb-6">
           {details.bullets.map((b) => (
-            <li key={b} className="flex items-start gap-3 text-sm text-gray-600">
-              <span className="text-blue-600 mt-0.5 flex-shrink-0">✓</span>
+            <li key={b} className="flex items-start gap-3 text-sm text-gray-600 dark:text-slate-300">
+              <span className="text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0">✓</span>
               {b}
             </li>
           ))}
         </ul>
 
-        <p className="text-center text-sm font-bold text-gray-900 mb-4">
+        <p className="text-center text-sm font-bold text-gray-900 dark:text-slate-100 mb-4">
           $4.99/month · Cancel anytime
         </p>
 
@@ -87,7 +87,7 @@ export default function UpgradeModal({ feature, onClose }: UpgradeModalProps) {
         </Link>
         <button
           onClick={onClose}
-          className="w-full text-gray-400 text-sm hover:text-gray-600 transition-colors py-2"
+          className="w-full text-gray-400 dark:text-slate-500 text-sm hover:text-gray-600 dark:hover:text-slate-300 transition-colors py-2"
         >
           Maybe later
         </button>

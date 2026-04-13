@@ -59,10 +59,10 @@ export default function AuthForm() {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 w-full max-w-sm p-8">
+    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-white/[0.08] w-full max-w-sm p-8">
       <div className="text-center mb-8">
-        <Link href="/" className="text-xl font-bold text-gray-900">AI Daily Terms</Link>
-        <p className="text-gray-500 mt-1 text-sm">
+        <Link href="/" className="text-xl font-bold text-gray-900 dark:text-slate-100">AI Daily Terms</Link>
+        <p className="text-gray-500 dark:text-slate-400 mt-1 text-sm">
           {mode === 'signin' ? 'Welcome back' : 'Create your free account'}
         </p>
       </div>
@@ -71,7 +71,7 @@ export default function AuthForm() {
       <button
         onClick={handleGoogleSignIn}
         disabled={loading}
-        className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-xl py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors mb-6 disabled:opacity-50"
+        className="w-full flex items-center justify-center gap-3 border border-gray-200 dark:border-white/[0.12] rounded-xl py-3 text-sm font-medium text-gray-700 dark:text-slate-200 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors mb-6 disabled:opacity-50"
       >
         <svg className="w-5 h-5" viewBox="0 0 24 24">
           <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -84,43 +84,43 @@ export default function AuthForm() {
 
       <div className="relative mb-6">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-100" />
+          <div className="w-full border-t border-gray-100 dark:border-white/[0.08]" />
         </div>
-        <div className="relative flex justify-center text-xs text-gray-400 bg-white px-2">or</div>
+        <div className="relative flex justify-center text-xs text-gray-400 dark:text-slate-500 bg-white dark:bg-slate-800 px-2">or</div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {mode === 'signup' && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Full name</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Full name</label>
             <input
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-200 dark:border-white/[0.12] dark:bg-slate-700 dark:text-slate-100 dark:placeholder-slate-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Your name"
               required
             />
           </div>
         )}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-gray-200 dark:border-white/[0.12] dark:bg-slate-700 dark:text-slate-100 dark:placeholder-slate-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="you@example.com"
             required
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-gray-200 dark:border-white/[0.12] dark:bg-slate-700 dark:text-slate-100 dark:placeholder-slate-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="••••••••"
             required
             minLength={6}
@@ -128,10 +128,10 @@ export default function AuthForm() {
         </div>
 
         {error && (
-          <div className="bg-red-50 text-red-700 text-sm px-4 py-3 rounded-xl">{error}</div>
+          <div className="bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-sm px-4 py-3 rounded-xl">{error}</div>
         )}
         {message && (
-          <div className="bg-green-50 text-green-700 text-sm px-4 py-3 rounded-xl">{message}</div>
+          <div className="bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm px-4 py-3 rounded-xl">{message}</div>
         )}
 
         <button
@@ -147,25 +147,25 @@ export default function AuthForm() {
         </button>
       </form>
 
-      <p className="text-center text-sm text-gray-500 mt-6">
+      <p className="text-center text-sm text-gray-500 dark:text-slate-400 mt-6">
         {mode === 'signin' ? (
           <>
             Don&apos;t have an account?{' '}
-            <button onClick={() => setMode('signup')} className="text-blue-600 font-medium hover:underline">
+            <button onClick={() => setMode('signup')} className="text-blue-600 dark:text-blue-400 font-medium hover:underline">
               Sign up free
             </button>
           </>
         ) : (
           <>
             Already have an account?{' '}
-            <button onClick={() => setMode('signin')} className="text-blue-600 font-medium hover:underline">
+            <button onClick={() => setMode('signin')} className="text-blue-600 dark:text-blue-400 font-medium hover:underline">
               Sign in
             </button>
           </>
         )}
       </p>
 
-      <p className="text-center text-xs text-gray-400 mt-4">
+      <p className="text-center text-xs text-gray-400 dark:text-slate-500 mt-4">
         No credit card required · Cancel anytime
       </p>
     </div>

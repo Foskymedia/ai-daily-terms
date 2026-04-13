@@ -22,7 +22,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const onboardingCompleted = profile?.onboarding_completed ?? false
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
       <DashboardNav isPro={isPro} />
 
       {/* Main content — extra bottom padding on mobile for bottom nav */}

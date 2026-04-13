@@ -15,6 +15,7 @@ const navLinks = [
   { label: 'Glossary', href: '/dashboard/glossary', pro: true },
   { label: 'Flashcards', href: '/dashboard/flashcards', pro: true },
   { label: 'Quiz', href: '/dashboard/quiz', pro: true },
+  { label: 'Progress', href: '/dashboard/progress', pro: false },
 ]
 
 export default function DashboardNav({ isPro }: DashboardNavProps) {

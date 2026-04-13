@@ -41,6 +41,11 @@ export interface Profile {
   subscription_status: string | null
   current_period_end: string | null
   onboarding_completed: boolean
+  // Phase 2: streak + level
+  current_streak: number
+  longest_streak: number
+  last_active_date: string | null
+  level: number
   created_at: string
 }
 
@@ -58,5 +63,14 @@ export interface UserProgress {
   term_id: string
   vertical_id: VerticalId
   status: 'seen' | 'saved' | 'mastered'
+  confidence: number | null
+  next_review_date: string | null
   updated_at: string
+}
+
+export interface Milestone {
+  id: string
+  user_id: string
+  milestone_type: string
+  achieved_at: string
 }

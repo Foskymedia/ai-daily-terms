@@ -92,10 +92,10 @@ export default async function HomePage() {
           <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
           New term published today
         </div>
-        <h1 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+        <h1 className="text-[28px] sm:text-5xl font-bold text-gray-900 mb-6 leading-tight">
           Finally understand what<br />everyone is talking about
         </h1>
-        <p className="text-xl text-gray-500 mb-10 max-w-2xl mx-auto">
+        <p className="text-lg sm:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
           Get one plain-English AI term every day. No fluff, no jargon — just the vocabulary
           you need to keep up with the AI revolution.
         </p>
@@ -217,12 +217,12 @@ export default async function HomePage() {
               <p className="text-gray-700 mb-4 leading-relaxed">&ldquo;{t.text}&rdquo;</p>
               <div>
                 <p className="font-semibold text-gray-900 text-sm">{t.name}</p>
-                <p className="text-gray-400 text-xs">{t.role}</p>
+                <p className="text-gray-500 text-xs">{t.role}</p>
               </div>
             </div>
           ))}
         </div>
-        <p className="text-center text-xs text-gray-400 mt-6">
+        <p className="text-center text-xs text-gray-500 mt-6">
           Testimonials are representative examples — real names pending.
         </p>
       </section>
@@ -231,7 +231,7 @@ export default async function HomePage() {
       <section className="bg-blue-600 py-20 text-center text-white">
         <div className="max-w-2xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-4">Ready to go deeper?</h2>
-          <p className="text-blue-100 text-lg mb-8">
+          <p className="text-blue-100 text-[17px] sm:text-lg mb-8">
             Upgrade to Pro for the full glossary, flashcards, quizzes, and unlimited history.
             Just $4.99/month.
           </p>

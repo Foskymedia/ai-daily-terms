@@ -143,8 +143,8 @@ export default function PricingPage() {
 
       <div className="max-w-5xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Simple, transparent pricing</h1>
-          <p className="text-xl text-gray-500">Start free. Upgrade when you&apos;re ready to go deeper.</p>
+          <h1 className="text-[28px] sm:text-4xl font-bold text-gray-900 mb-4">Simple, transparent pricing</h1>
+          <p className="text-lg sm:text-xl text-gray-600">Start free. Upgrade when you&apos;re ready to go deeper.</p>
         </div>
 
         {/* Pricing cards */}
@@ -166,7 +166,7 @@ export default function PricingPage() {
                 <div className="flex items-baseline gap-1">
                   <span className="text-3xl font-bold text-gray-900">{plan.price}</span>
                 </div>
-                <p className="text-sm text-gray-400 mt-0.5">{plan.billing}</p>
+                <p className="text-sm text-gray-500 mt-0.5">{plan.billing}</p>
               </div>
 
               <ul className="space-y-2 mb-6 flex-1">
@@ -243,7 +243,7 @@ export default function PricingPage() {
           </div>
         </div>
 
-        <p className="text-center text-sm text-gray-400">
+        <p className="text-center text-sm text-gray-500">
           All payments processed securely by Stripe. Cancel anytime.{' '}
           <Link href="/billing" className="hover:text-gray-600 underline">Billing help</Link>
         </p>

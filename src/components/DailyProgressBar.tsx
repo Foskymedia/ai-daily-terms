@@ -15,15 +15,15 @@ function Step({ label, done, locked }: { label: string; done: boolean; locked?: 
           done
             ? 'bg-green-500 text-white'
             : locked
-            ? 'bg-gray-100 text-gray-300 border border-gray-200'
-            : 'bg-gray-100 text-gray-400 border border-gray-200'
+            ? 'bg-gray-100 text-gray-400 border border-gray-200'
+            : 'bg-gray-100 text-gray-500 border border-gray-200'
         }`}
       >
         {done ? '✓' : locked ? '🔒' : '○'}
       </span>
       <span
         className={`text-sm font-medium ${
-          done ? 'text-green-700 line-through' : locked ? 'text-gray-300' : 'text-gray-600'
+          done ? 'text-green-700 line-through' : locked ? 'text-gray-400' : 'text-gray-700'
         }`}
       >
         {label}

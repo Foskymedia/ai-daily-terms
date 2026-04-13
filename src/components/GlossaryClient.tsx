@@ -168,7 +168,7 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
             <p className="text-sm font-semibold text-gray-900">
               {seenCount} / {totalPublished} explored
             </p>
-            <p className="text-xs text-gray-400">{totalPublished - seenCount} terms remaining</p>
+            <p className="text-xs text-gray-500">{totalPublished - seenCount} terms remaining</p>
           </div>
         </div>
       </div>
@@ -235,7 +235,7 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
       </div>
 
       {/* Term count */}
-      <p className="text-sm text-gray-400 mb-6">
+      <p className="text-sm text-gray-500 mb-6">
         {filtered.length === terms.length
           ? `Showing all ${terms.length} terms`
           : `${filtered.length} of ${terms.length} terms`}
@@ -243,12 +243,12 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
 
       {/* Term list */}
       {letters.length === 0 ? (
-        <div className="text-center text-gray-400 py-16">No terms match your filters.</div>
+        <div className="text-center text-gray-500 py-16">No terms match your filters.</div>
       ) : (
         <div className="space-y-10">
           {letters.map((letter) => (
             <div key={letter}>
-              <h2 className="text-xl font-bold text-gray-300 mb-4 border-b border-gray-100 pb-2">{letter}</h2>
+              <h2 className="text-xl font-bold text-gray-400 mb-4 border-b border-gray-100 pb-2">{letter}</h2>
               <div className="space-y-3">
                 {grouped[letter].map((term) => {
                   const status = localProgress[term.id]
@@ -298,11 +298,11 @@ export default function GlossaryClient({ terms, progressMap, userId, totalPublis
                         </div>
                       </div>
 
-                      <p className="text-gray-600 text-sm leading-relaxed">
+                      <p className="text-gray-700 text-[15px] leading-relaxed">
                         {term.plain_explanation ?? term.definition}
                       </p>
                       {term.example_sentence && (
-                        <p className="text-xs text-gray-400 italic mt-2 border-l-2 border-gray-200 pl-3">
+                        <p className="text-sm text-gray-500 italic mt-2 border-l-2 border-gray-200 pl-3">
                           &ldquo;{term.example_sentence}&rdquo;
                         </p>
                       )}

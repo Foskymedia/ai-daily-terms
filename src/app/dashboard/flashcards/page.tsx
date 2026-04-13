@@ -188,7 +188,7 @@ export default function FlashcardsPage() {
       <div className="max-w-2xl mx-auto text-center py-16">
         <div className="text-5xl mb-4">🔒</div>
         <h1 className="text-2xl font-bold text-gray-900 mb-3">Flashcards is a Pro feature</h1>
-        <p className="text-gray-500 mb-8">
+        <p className="text-gray-600 mb-8">
           Upgrade to Pro to practice with flashcards and reinforce your AI vocabulary.
         </p>
         <Link href="/pricing" className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors">
@@ -209,17 +209,17 @@ export default function FlashcardsPage() {
         <div className="text-center py-8">
           <div className="text-5xl mb-4">🎉</div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Session Complete!</h1>
-          <p className="text-gray-500 mb-8">You reviewed {terms.length} cards.</p>
+          <p className="text-gray-600 mb-8">You reviewed {terms.length} cards.</p>
 
           <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm mb-8">
             <div className="flex justify-center gap-16">
               <div>
                 <div className="text-4xl font-bold text-green-600">{gotItCount}</div>
-                <div className="text-sm text-gray-400 mt-1">Got it ✓</div>
+                <div className="text-sm text-gray-600 mt-1">Got it ✓</div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-amber-500">{reviewAgainCount}</div>
-                <div className="text-sm text-gray-400 mt-1">Review again ↺</div>
+                <div className="text-sm text-gray-600 mt-1">Review again ↺</div>
               </div>
             </div>
           </div>
@@ -317,14 +317,14 @@ export default function FlashcardsPage() {
             className="absolute inset-0 bg-white rounded-2xl border border-gray-100 shadow-sm p-8 flex flex-col items-center justify-center text-center"
             style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
           >
-            <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-4">Term</p>
+            <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-4">Term</p>
             <h2 className="text-2xl font-bold text-gray-900 leading-tight">{current.term}</h2>
             {current.category && (
               <span className="mt-4 text-xs bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full font-medium">
                 {current.category}
               </span>
             )}
-            <p className="text-sm text-gray-400 mt-6">Tap to reveal definition</p>
+            <p className="text-sm text-gray-500 mt-6">Tap to reveal definition</p>
           </div>
 
           {/* Back */}

@@ -50,6 +50,7 @@ export default function QuizPage() {
   const [userId, setUserId] = useState<string | null>(null)
   const [quizDone, setQuizDone] = useState(false)
   const [masteredCount, setMasteredCount] = useState(0)
+  const [xpFlash, setXpFlash] = useState<string | null>(null)
   const dailyProgressCalled = useRef(false)
 
   const load = useCallback(async (weakFilter?: string[]) => {
@@ -171,6 +172,17 @@ export default function QuizPage() {
       }).then(() => {})
     }
 
+    // Award +10 XP for each correct answer
+    if (isCorrect) {
+      fetch('/api/award-xp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: 10 }),
+      }).then(() => {})
+      setXpFlash('+10 XP')
+      setTimeout(() => setXpFlash(null), 1800)
+    }
+
     // Mark quiz_done on first answer of the session
     if (!dailyProgressCalled.current) {
       dailyProgressCalled.current = true
@@ -212,7 +224,7 @@ export default function QuizPage() {
   // ── Loading ──────────────────────────────────────────────────────
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-64 text-gray-400">
+      <div className="flex items-center justify-center min-h-64 text-gray-500">
         Loading quiz...
       </div>
     )
@@ -224,7 +236,7 @@ export default function QuizPage() {
       <div className="max-w-2xl mx-auto text-center py-16">
         <div className="text-5xl mb-4">🔒</div>
         <h1 className="text-2xl font-bold text-gray-900 mb-3">Quiz Mode is a Pro feature</h1>
-        <p className="text-gray-500 mb-8">
+        <p className="text-gray-600 mb-8">
           Upgrade to Pro to test your knowledge and track mastery across all AI terms.
         </p>
         <Link href="/pricing" className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors">
@@ -250,19 +262,19 @@ export default function QuizPage() {
       <div className="max-w-2xl mx-auto text-center py-8">
         <div className="text-5xl mb-4">🎉</div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Quiz Complete!</h1>
-        <p className="text-gray-500 mb-6">You answered all {total} questions.</p>
+        <p className="text-gray-600 mb-6">You answered all {total} questions.</p>
 
         <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm mb-6">
           <div className="text-6xl font-bold text-blue-600 mb-1">{pct}%</div>
-          <p className="text-gray-400 mb-6">Final score</p>
+          <p className="text-gray-500 mb-6">Final score</p>
           <div className="flex justify-center gap-16">
             <div>
               <div className="text-4xl font-bold text-green-600">{correctCount}</div>
-              <div className="text-sm text-gray-400 mt-1">Correct</div>
+              <div className="text-sm text-gray-600 mt-1">Correct</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-red-500">{incorrectCount}</div>
-              <div className="text-sm text-gray-400 mt-1">Incorrect</div>
+              <div className="text-sm text-gray-600 mt-1">Incorrect</div>
             </div>
           </div>
         </div>
@@ -346,16 +358,23 @@ export default function QuizPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
+      {/* XP flash overlay */}
+      {xpFlash && (
+        <div className="fixed top-4 right-4 z-[70] bg-blue-600 text-white px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2 text-sm font-semibold animate-fade-in">
+          <span>⚡</span> {xpFlash}
+        </div>
+      )}
+
       {/* Header */}
       <div className="mb-2 flex items-center justify-between flex-wrap gap-2">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Quiz</h1>
-          <p className="text-xs text-gray-400 mt-0.5">{getDifficultyLabel(masteredCount)}</p>
+          <p className="text-xs text-gray-500 mt-0.5">{getDifficultyLabel(masteredCount)}</p>
         </div>
         <div className="flex items-center gap-3 text-sm">
           <span className="font-semibold text-green-600">{correctCount} correct</span>
           <span className="text-gray-300">|</span>
-          <span className="text-gray-500">{correctCount + incorrectCount} answered</span>
+          <span className="text-gray-600">{correctCount + incorrectCount} answered</span>
         </div>
       </div>
 
@@ -371,7 +390,7 @@ export default function QuizPage() {
           style={{ width: `${progress}%` }}
         />
       </div>
-      <p className="text-xs text-gray-400 text-right mb-6 -mt-4">
+      <p className="text-xs text-gray-500 text-right mb-6 -mt-4">
         {currentIndex + 1} / {total}
       </p>
 
@@ -380,7 +399,7 @@ export default function QuizPage() {
         <p className="text-xs text-blue-600 font-semibold uppercase tracking-wider mb-2">
           {current.term}
         </p>
-        <h2 className="text-xl font-bold text-gray-900 mb-8 leading-snug">
+        <h2 className="text-[18px] md:text-xl font-bold text-gray-900 mb-8 leading-snug">
           {current.quiz_question}
         </h2>
 
@@ -390,16 +409,16 @@ export default function QuizPage() {
             const isWrongSelected = opt.key === answerState?.selected && !answerState?.isCorrect
 
             let cls =
-              'w-full text-left px-5 py-4 rounded-xl border-2 font-medium text-sm transition-all min-h-[52px] '
+              'w-full text-left px-5 py-4 rounded-xl border-2 font-medium text-base transition-all min-h-[52px] '
 
             if (!answered) {
-              cls += 'border-gray-200 text-gray-700 hover:border-blue-400 hover:bg-blue-50 cursor-pointer'
+              cls += 'border-gray-200 text-gray-800 hover:border-blue-400 hover:bg-blue-50 cursor-pointer'
             } else if (isCorrectOpt) {
               cls += 'border-green-500 bg-green-50 text-green-800'
             } else if (isWrongSelected) {
               cls += 'border-red-400 bg-red-50 text-red-700'
             } else {
-              cls += 'border-gray-100 text-gray-400 cursor-default'
+              cls += 'border-gray-100 text-gray-500 cursor-default'
             }
 
             return (
@@ -409,7 +428,7 @@ export default function QuizPage() {
                 disabled={answered}
                 className={cls}
               >
-                <span className="inline-block w-6 font-bold text-gray-400 mr-2">{opt.key}.</span>
+                <span className="inline-block w-6 font-bold text-gray-500 mr-2">{opt.key}.</span>
                 {opt.text}
               </button>
             )

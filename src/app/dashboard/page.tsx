@@ -2,9 +2,11 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Term, Profile } from '@/types'
-import { getLevel, getLevelProgress } from '@/lib/levels'
+import { getLevel, getLevelFromXP, getXPProgress, getXPToNextLevel } from '@/lib/levels'
+import { XP_VALUES } from '@/lib/xp'
 import TodayTermActions from '@/components/TodayTermActions'
 import MilestoneToast from '@/components/MilestoneToast'
+import XPToast from '@/components/XPToast'
 import DailyProgressBar from '@/components/DailyProgressBar'
 
 const difficultyColors = {
@@ -64,6 +66,8 @@ export default async function DashboardPage() {
     .eq('date', today)
     .maybeSingle()
 
+  const isFirstViewToday = !dailyProgressData || !dailyProgressData.term_viewed
+
   if (!dailyProgressData) {
     await supabase.from('daily_progress').insert({
       user_id: user.id,
@@ -72,6 +76,25 @@ export default async function DashboardPage() {
     })
   } else if (!dailyProgressData.term_viewed) {
     await supabase.from('daily_progress').update({ term_viewed: true }).eq('id', dailyProgressData.id)
+  }
+
+  // ── Award +5 XP for reading term (once per day) ───────────────────
+  let readXpGained = 0
+  let displayXP = profile?.total_xp ?? 0
+
+  if (isFirstViewToday) {
+    readXpGained = XP_VALUES.READ_TERM
+    const newXP = displayXP + readXpGained
+    const newLevelInfo = getLevelFromXP(newXP)
+    await supabase
+      .from('profiles')
+      .update({
+        total_xp: newXP,
+        level: newLevelInfo.level,
+        xp_to_next_level: getXPToNextLevel(newXP),
+      })
+      .eq('id', user.id)
+    displayXP = newXP
   }
 
   const termViewed = true
@@ -85,6 +108,7 @@ export default async function DashboardPage() {
 
   // ── Milestone checks ──────────────────────────────────────────────
   const levelInfo = getLevel(masteredCount)
+  const xpLevelInfo = getLevelFromXP(displayXP)
   const newMilestones: string[] = []
 
   if (currentStreak >= 3 && !achievedMilestones.has('streak_3')) newMilestones.push('streak_3')
@@ -170,10 +194,17 @@ export default async function DashboardPage() {
     (Date.now() - new Date(profile?.created_at ?? Date.now()).getTime()) / (1000 * 60 * 60 * 24)
   )
   const showUpgradeBanner = !isPro && daysSinceSignup >= 3
-  const levelProgress = getLevelProgress(masteredCount)
+
+  // XP progress for display
+  const { pct: xpPct, xpInLevel, xpNeeded } = getXPProgress(displayXP)
+
   const todayFormatted = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
   const motivational = getMotivationalMessage()
   const streakMilestoneMsg = getStreakMilestoneMessage(currentStreak)
+
+  // XP toast notifications for this page load
+  const xpNotifications: string[] = []
+  if (readXpGained > 0) xpNotifications.push(`+${readXpGained} XP`)
 
   // Quiz stats (Pro only)
   let quizzableCount = 0
@@ -210,8 +241,8 @@ export default async function DashboardPage() {
       {/* Top row: motivational + streak + level */}
       <div className="flex items-start justify-between mb-5 flex-wrap gap-3">
         <div>
-          <p className="text-xs text-gray-400 uppercase tracking-wide font-medium">{todayFormatted}</p>
-          <p className="text-sm text-gray-500 mt-0.5">{motivational}</p>
+          <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">{todayFormatted}</p>
+          <p className="text-sm text-gray-600 mt-0.5">{motivational}</p>
         </div>
 
         <div className="flex items-center gap-2">
@@ -219,9 +250,9 @@ export default async function DashboardPage() {
           <div className="flex items-center gap-1.5 bg-orange-50 text-orange-600 px-3 py-1.5 rounded-full text-sm font-semibold">
             🔥 {currentStreak} day{currentStreak !== 1 ? 's' : ''}
           </div>
-          {/* Level badge */}
+          {/* XP level badge */}
           <div className="flex items-center gap-1.5 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full text-sm font-semibold">
-            ⭐ {levelInfo.name}
+            ⭐ Level {xpLevelInfo.level}
           </div>
         </div>
       </div>
@@ -233,27 +264,27 @@ export default async function DashboardPage() {
         </div>
       )}
 
-      {/* Level progress bar */}
+      {/* XP + Level progress bar */}
       <div className="bg-white rounded-2xl border border-gray-100 px-5 py-4 mb-5">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-semibold text-gray-500">
-            Level {levelInfo.level} — {levelInfo.name}
+          <span className="text-xs font-semibold text-gray-600">
+            Level {xpLevelInfo.level} — {xpLevelInfo.name}
           </span>
-          <span className="text-xs text-gray-400">
-            {masteredCount}{levelInfo.max !== null ? ` / ${levelInfo.max}` : '+'} mastered
+          <span className="text-xs text-gray-500">
+            {displayXP} XP total
           </span>
         </div>
         <div className="w-full bg-gray-100 rounded-full h-2">
           <div
             className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-            style={{ width: `${levelProgress}%` }}
+            style={{ width: `${xpPct}%` }}
           />
         </div>
-        {levelInfo.max !== null && (
-          <p className="text-xs text-gray-400 mt-1.5">
-            {levelInfo.max - masteredCount} more to reach {getLevel(levelInfo.max + 1).name}
-          </p>
-        )}
+        <p className="text-xs text-gray-500 mt-1.5">
+          {xpNeeded !== null
+            ? `${xpInLevel} / ${xpInLevel + xpNeeded} XP · ${xpNeeded} to ${getLevelFromXP(displayXP + xpNeeded).name}`
+            : 'Max level reached — AI Fluent!'}
+        </p>
       </div>
 
       {/* Daily progress checklist */}
@@ -266,7 +297,7 @@ export default async function DashboardPage() {
 
       {/* Today's term heading */}
       <div className="mb-3">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+        <h1 className="text-[28px] md:text-3xl font-bold text-gray-900">
           {isPro ? 'Your AI term for today' : "Today's free term"}
         </h1>
       </div>
@@ -287,16 +318,16 @@ export default async function DashboardPage() {
             )}
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+          <h2 className="text-[32px] md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
             {todaysTerm.term}
           </h2>
-          <p className="text-gray-600 leading-relaxed text-base md:text-lg mb-6">
+          <p className="text-gray-700 leading-[1.7] text-[17px] md:text-lg mb-6">
             {todaysTerm.plain_explanation ?? todaysTerm.definition}
           </p>
 
           {todaysTerm.example_sentence && (
             <div className="bg-gray-50 rounded-xl p-4 md:p-5 border-l-4 border-blue-400 mb-6">
-              <p className="text-xs text-gray-400 font-medium uppercase tracking-wide mb-2">Example</p>
+              <p className="text-xs text-gray-500 font-medium uppercase tracking-wide mb-2">Example</p>
               <p className="text-gray-700 italic text-sm md:text-base">
                 &ldquo;{todaysTerm.example_sentence}&rdquo;
               </p>
@@ -316,7 +347,7 @@ export default async function DashboardPage() {
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center text-gray-400 mb-5">
+        <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center text-gray-500 mb-5">
           No term published yet for today. Check back soon.
         </div>
       )}
@@ -342,7 +373,7 @@ export default async function DashboardPage() {
       {/* Resume learning */}
       {lastTerm && (
         <div className="bg-white rounded-2xl border border-gray-100 p-5 mb-5">
-          <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-2">Resume Learning</p>
+          <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-2">Resume Learning</p>
           <div className="flex items-center justify-between">
             <p className="text-sm text-gray-700">
               Continue where you left off: <span className="font-semibold">{lastTerm.term}</span>
@@ -391,7 +422,7 @@ export default async function DashboardPage() {
             >
               <div className="text-2xl mb-2">📚</div>
               <div className="font-semibold text-gray-900 text-sm">Glossary</div>
-              <div className="text-xs text-gray-500 mt-0.5">Browse all terms</div>
+              <div className="text-xs text-gray-600 mt-0.5">Browse all terms</div>
             </Link>
             <Link
               href="/dashboard/flashcards"
@@ -399,7 +430,7 @@ export default async function DashboardPage() {
             >
               <div className="text-2xl mb-2">🃏</div>
               <div className="font-semibold text-gray-900 text-sm">Flashcards</div>
-              <div className="text-xs text-gray-500 mt-0.5">Practice &amp; review</div>
+              <div className="text-xs text-gray-600 mt-0.5">Practice &amp; review</div>
             </Link>
             <Link
               href="/dashboard/quiz"
@@ -407,7 +438,7 @@ export default async function DashboardPage() {
             >
               <div className="text-2xl mb-2">🧠</div>
               <div className="font-semibold text-gray-900 text-sm">Quiz Mode</div>
-              <div className="text-xs text-gray-500 mt-0.5">Test knowledge</div>
+              <div className="text-xs text-gray-600 mt-0.5">Test knowledge</div>
             </Link>
           </div>
 
@@ -434,6 +465,8 @@ export default async function DashboardPage() {
 
       {/* Milestone toast */}
       <MilestoneToast milestones={newMilestones} />
+      {/* XP toast */}
+      <XPToast notifications={xpNotifications} />
     </div>
   )
 }

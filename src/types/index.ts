@@ -47,6 +47,9 @@ export interface Profile {
   last_active_date: string | null
   level: number
   created_at: string
+  // Phase 4: XP system
+  total_xp: number
+  xp_to_next_level: number | null
 }
 
 export interface DailyView {

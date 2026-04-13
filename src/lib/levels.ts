@@ -29,6 +29,56 @@ export function getLevelProgress(mastered: number): number {
   return Math.min(100, Math.round((progress / range) * 100))
 }
 
+// ── XP-based level system ────────────────────────────────────────────────────
+
+export interface XPLevelInfo {
+  level: number
+  name: string
+  minXP: number
+  maxXP: number | null
+}
+
+const XP_LEVELS: XPLevelInfo[] = [
+  { level: 1, name: 'Beginner',         minXP: 0,   maxXP: 49  },
+  { level: 2, name: 'Learner',          minXP: 50,  maxXP: 149 },
+  { level: 3, name: 'Practitioner',     minXP: 150, maxXP: 299 },
+  { level: 4, name: 'Skilled User',     minXP: 300, maxXP: 499 },
+  { level: 5, name: 'Advanced Learner', minXP: 500, maxXP: 799 },
+  { level: 6, name: 'AI Fluent',        minXP: 800, maxXP: null },
+]
+
+export function getLevelFromXP(xp: number): XPLevelInfo {
+  for (let i = XP_LEVELS.length - 1; i >= 0; i--) {
+    if (xp >= XP_LEVELS[i].minXP) return XP_LEVELS[i]
+  }
+  return XP_LEVELS[0]
+}
+
+/**
+ * Returns XP progress within the current level.
+ * pct: 0–100 for the progress bar
+ * xpInLevel: XP earned within this level band
+ * xpNeeded: XP remaining to reach next level (null at max level)
+ */
+export function getXPProgress(xp: number): { pct: number; xpInLevel: number; xpNeeded: number | null } {
+  const info = getLevelFromXP(xp)
+  if (info.maxXP === null) return { pct: 100, xpInLevel: xp - info.minXP, xpNeeded: null }
+  const range = info.maxXP - info.minXP + 1
+  const progress = xp - info.minXP
+  return {
+    pct: Math.min(100, Math.round((progress / range) * 100)),
+    xpInLevel: progress,
+    xpNeeded: range - progress,
+  }
+}
+
+/** XP needed to reach the next level, or null if already at max. */
+export function getXPToNextLevel(xp: number): number | null {
+  const info = getLevelFromXP(xp)
+  if (info.maxXP === null) return null
+  return info.maxXP + 1 - xp
+}
+
 export const MILESTONE_LABELS: Record<string, string> = {
   first_term: 'Read your first AI term 🎉',
   streak_3:   '3-day streak — you\'re building a habit! 🎯',

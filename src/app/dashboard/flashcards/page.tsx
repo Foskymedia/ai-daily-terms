@@ -18,6 +18,7 @@ export default function FlashcardsPage() {
   const [reviewAgainCount, setReviewAgainCount] = useState(0)
   const [reviewAgainIds, setReviewAgainIds] = useState<Set<string>>(new Set())
   const touchStart = useRef<{ x: number; y: number } | null>(null)
+  const dailyProgressCalled = useRef(false)
 
   useEffect(() => {
     async function load() {
@@ -60,6 +61,16 @@ export default function FlashcardsPage() {
     async (gotIt: boolean) => {
       const current = terms[currentIndex]
       if (!current) return
+
+      // Mark flashcard_done on first interaction of the session
+      if (!dailyProgressCalled.current) {
+        dailyProgressCalled.current = true
+        fetch('/api/daily-progress', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'flashcard_done' }),
+        }).catch(() => {})
+      }
 
       if (userId) {
         const supabase = createClient()
@@ -211,6 +222,18 @@ export default function FlashcardsPage() {
                 <div className="text-sm text-gray-400 mt-1">Review again ↺</div>
               </div>
             </div>
+          </div>
+
+          {/* Quiz nudge */}
+          <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5 mb-6 text-center">
+            <p className="text-sm font-semibold text-blue-900 mb-1">Ready to test yourself?</p>
+            <p className="text-sm text-blue-700 mb-3">Take the quiz to lock in what you just practiced.</p>
+            <Link
+              href="/dashboard/quiz"
+              className="inline-block text-sm bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+            >
+              Take Quiz →
+            </Link>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">

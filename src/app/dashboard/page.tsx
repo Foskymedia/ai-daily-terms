@@ -5,6 +5,7 @@ import { Term, Profile } from '@/types'
 import { getLevel, getLevelProgress } from '@/lib/levels'
 import TodayTermActions from '@/components/TodayTermActions'
 import MilestoneToast from '@/components/MilestoneToast'
+import DailyProgressBar from '@/components/DailyProgressBar'
 
 const difficultyColors = {
   beginner: 'bg-green-100 text-green-700',
@@ -32,7 +33,6 @@ export default async function DashboardPage() {
   if (!user) redirect('/auth')
 
   const today = new Date().toISOString().split('T')[0]
-  const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
 
   // Parallel fetches
   const [profileResult, masteredCountResult, milestonesResult] = await Promise.all([
@@ -54,20 +54,29 @@ export default async function DashboardPage() {
     milestonesResult.data?.map((m: { milestone_type: string }) => m.milestone_type) ?? []
   )
 
-  // ── Streak update ─────────────────────────────────────────────────
-  let currentStreak = profile?.current_streak ?? 0
-  let longestStreak = profile?.longest_streak ?? 0
-  const lastActive = profile?.last_active_date
+  const currentStreak = profile?.current_streak ?? 0
 
-  if (lastActive !== today) {
-    currentStreak = lastActive === yesterday ? (profile?.current_streak ?? 0) + 1 : 1
-    longestStreak = Math.max(currentStreak, profile?.longest_streak ?? 0)
+  // ── Daily progress: mark term viewed ─────────────────────────────
+  const { data: dailyProgressData } = await supabase
+    .from('daily_progress')
+    .select('id, term_viewed, flashcard_done, quiz_done, completed_at')
+    .eq('user_id', user.id)
+    .eq('date', today)
+    .maybeSingle()
 
-    await supabase
-      .from('profiles')
-      .update({ current_streak: currentStreak, longest_streak: longestStreak, last_active_date: today })
-      .eq('id', user.id)
+  if (!dailyProgressData) {
+    await supabase.from('daily_progress').insert({
+      user_id: user.id,
+      date: today,
+      term_viewed: true,
+    })
+  } else if (!dailyProgressData.term_viewed) {
+    await supabase.from('daily_progress').update({ term_viewed: true }).eq('id', dailyProgressData.id)
   }
+
+  const termViewed = true
+  const flashcardDone = dailyProgressData?.flashcard_done ?? false
+  const quizDone = dailyProgressData?.quiz_done ?? false
 
   // Record daily view (unique per day)
   await supabase
@@ -246,6 +255,14 @@ export default async function DashboardPage() {
           </p>
         )}
       </div>
+
+      {/* Daily progress checklist */}
+      <DailyProgressBar
+        termViewed={termViewed}
+        flashcardDone={flashcardDone}
+        quizDone={quizDone}
+        isPro={isPro}
+      />
 
       {/* Today's term heading */}
       <div className="mb-3">

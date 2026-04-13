@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import { Term } from '@/types'
@@ -50,6 +50,7 @@ export default function QuizPage() {
   const [userId, setUserId] = useState<string | null>(null)
   const [quizDone, setQuizDone] = useState(false)
   const [masteredCount, setMasteredCount] = useState(0)
+  const dailyProgressCalled = useRef(false)
 
   const load = useCallback(async (weakFilter?: string[]) => {
     const supabase = createClient()
@@ -158,6 +159,27 @@ export default function QuizPage() {
         wrong: (prev[cat]?.wrong ?? 0) + (isCorrect ? 0 : 1),
       },
     }))
+
+    // Log quiz attempt
+    if (userId) {
+      const supabase = createClient()
+      supabase.from('quiz_attempts').insert({
+        user_id: userId,
+        term_id: current.id,
+        correct: isCorrect,
+        category: current.category ?? null,
+      }).then(() => {})
+    }
+
+    // Mark quiz_done on first answer of the session
+    if (!dailyProgressCalled.current) {
+      dailyProgressCalled.current = true
+      fetch('/api/daily-progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'quiz_done' }),
+      }).catch(() => {})
+    }
   }
 
   async function nextQuestion() {
@@ -269,6 +291,14 @@ export default function QuizPage() {
             </button>
           </div>
         )}
+
+        {/* Done for today banner — quiz is the final step */}
+        <div className="bg-green-50 border border-green-100 rounded-2xl p-5 mb-6">
+          <p className="text-sm font-semibold text-green-800 mb-0.5">You&apos;re done for today!</p>
+          <p className="text-sm text-green-700">
+            Read → Flashcards → Quiz. Come back tomorrow to keep your streak alive.
+          </p>
+        </div>
 
         <div className="flex items-center justify-center gap-3 flex-wrap">
           <button
@@ -392,14 +422,16 @@ export default function QuizPage() {
         <div className="space-y-4">
           <div
             className={`rounded-xl p-5 border-l-4 ${
-              answerState!.isCorrect ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-400'
+              answerState!.isCorrect ? 'bg-green-50 border-green-500' : 'bg-amber-50 border-amber-400'
             }`}
           >
             <p className="text-sm font-semibold text-gray-900 mb-1">
-              {answerState!.isCorrect ? '✓ Correct!' : '✗ Not quite'}
+              {answerState!.isCorrect
+                ? "✓ Correct! You're getting strong in this topic."
+                : "✗ Not quite — let's reinforce this concept."}
             </p>
             {current.quiz_explanation && (
-              <p className="text-sm text-gray-700">{current.quiz_explanation}</p>
+              <p className="text-sm text-gray-700 mt-1">{current.quiz_explanation}</p>
             )}
           </div>
 

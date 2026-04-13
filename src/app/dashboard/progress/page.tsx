@@ -16,7 +16,7 @@ export default async function ProgressPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth')
 
-  const [profileResult, progressResult, termsResult, milestonesResult] = await Promise.all([
+  const [profileResult, progressResult, termsResult, milestonesResult, quizAttemptsResult] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user.id).single(),
     supabase
       .from('user_progress')
@@ -34,10 +34,20 @@ export default async function ProgressPage() {
       .eq('user_id', user.id)
       .order('achieved_at', { ascending: false })
       .limit(10),
+    supabase
+      .from('quiz_attempts')
+      .select('correct')
+      .eq('user_id', user.id),
   ])
 
   const profile = profileResult.data as Profile | null
   const isPro = profile?.tier === 'pro' || profile?.tier === 'lifetime'
+
+  // Quiz accuracy
+  const quizAttempts = quizAttemptsResult.data ?? []
+  const totalAttempts = quizAttempts.length
+  const correctAttempts = quizAttempts.filter((a: { correct: boolean }) => a.correct).length
+  const quizAccuracyPct = totalAttempts > 0 ? Math.round((correctAttempts / totalAttempts) * 100) : null
 
   const progressRows = progressResult.data ?? []
   const progressByTermId = new Map(progressRows.map((p) => [p.term_id, p.status as string]))
@@ -82,7 +92,7 @@ export default async function ProgressPage() {
       </div>
 
       {/* Stats grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-4">
         <div className="bg-white rounded-2xl border border-gray-100 p-5 text-center">
           <p className="text-3xl font-bold text-gray-900">{seenCount}</p>
           <p className="text-xs text-gray-400 mt-1 uppercase tracking-wide">Terms Seen</p>
@@ -95,9 +105,26 @@ export default async function ProgressPage() {
           <p className="text-3xl font-bold text-orange-500">🔥 {currentStreak}</p>
           <p className="text-xs text-gray-400 mt-1 uppercase tracking-wide">Day Streak</p>
         </div>
+      </div>
+      <div className="grid grid-cols-2 gap-4 mb-8">
         <div className="bg-white rounded-2xl border border-gray-100 p-5 text-center">
           <p className="text-3xl font-bold text-blue-600">{longestStreak}</p>
           <p className="text-xs text-gray-400 mt-1 uppercase tracking-wide">Best Streak</p>
+        </div>
+        <div className="bg-white rounded-2xl border border-gray-100 p-5 text-center">
+          {quizAccuracyPct !== null ? (
+            <>
+              <p className="text-3xl font-bold text-purple-600">{quizAccuracyPct}%</p>
+              <p className="text-xs text-gray-400 mt-1 uppercase tracking-wide">Quiz Accuracy</p>
+              <p className="text-xs text-gray-300 mt-0.5">{totalAttempts} attempts</p>
+            </>
+          ) : (
+            <>
+              <p className="text-3xl font-bold text-gray-300">—</p>
+              <p className="text-xs text-gray-400 mt-1 uppercase tracking-wide">Quiz Accuracy</p>
+              <p className="text-xs text-gray-300 mt-0.5">No attempts yet</p>
+            </>
+          )}
         </div>
       </div>
 

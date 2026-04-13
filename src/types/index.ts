@@ -74,3 +74,23 @@ export interface Milestone {
   milestone_type: string
   achieved_at: string
 }
+
+export interface DailyProgress {
+  id: string
+  user_id: string
+  date: string
+  term_viewed: boolean
+  flashcard_done: boolean
+  quiz_done: boolean
+  completed_at: string | null
+  created_at: string
+}
+
+export interface QuizAttempt {
+  id: string
+  user_id: string
+  term_id: string
+  correct: boolean
+  category: string | null
+  created_at: string
+}
